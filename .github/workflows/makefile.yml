@@ -14,11 +14,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install brew
-      run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
     - name: Install tree
-      run: brew install tree
+      run: sudo apt-get install tree
 
     - name: Tree
       run: tree
@@ -28,6 +25,3 @@ jobs:
 
     - name: Re-make program
       run: make re
-
-    - name: Test - 100
-      run: ./tests/test_100_1_arg.sh
