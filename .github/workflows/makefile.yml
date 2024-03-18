@@ -1,0 +1,33 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install brew
+      run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    - name: Install tree
+      run: brew install tree
+
+    - name: Tree
+      run: tree
+  
+    - name: Make program
+      run: make
+
+    - name: Re-make program
+      run: make re
+
+    - name: Test - 100
+      run: ./tests/test_100_1_arg.sh
