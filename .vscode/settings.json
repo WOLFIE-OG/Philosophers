@@ -2,6 +2,7 @@
 	"files.associations": {
 		"colour_codes.h": "c",
 		"philo.h": "c",
-		"time.h": "c"
+		"time.h": "c",
+		"cstdlib": "c"
 	}
 }

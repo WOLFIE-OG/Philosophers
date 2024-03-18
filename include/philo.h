@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/03/18 17:57:14 by otodd            ###   ########.fr       */
+/*   Updated: 2024/03/18 18:23:53 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,28 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <stdbool.h>
+
+typedef struct s_carbon
+{
+	int		id;
+	int		meals_eaten;
+	bool	is_dead;
+	int		nop;
+	int		ttd;
+	int		tte;
+	int		tts;
+}	t_carbon;
+
+typedef struct s_earth
+{
+	t_carbon	**souls;
+	int			nop;
+	int			ttd;
+	int			tte;
+	int			tts;
+	int			notepme;
+}	t_earth;
 
 unsigned long	get_current_time(void);
 void			l_taken_fork(char *tmp);

@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:39:56 by otodd             #+#    #+#             */
-/*   Updated: 2024/03/18 17:58:26 by otodd            ###   ########.fr       */
+/*   Updated: 2024/03/18 18:11:10 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_atoi(const char *nptr)
 			operation *= -1;
 		c++;
 	}
-	while (*c >= 48 && *c <= 57)
+	while (*c >= '0' && *c <= '9')
 		value = (value * 10) + (*c++ - '0');
 	return (value * operation);
 }
