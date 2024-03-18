@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/03/18 17:57:14 by otodd            ###   ########.fr       */
+/*   Created: 2024/03/18 17:25:00 by otodd             #+#    #+#             */
+/*   Updated: 2024/03/18 17:39:01 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
-# include "colour_codes.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/time.h>
-# include <pthread.h>
+#include "../include/philo.h"
 
-unsigned long	get_current_time(void);
-void			l_taken_fork(char *tmp);
-void			l_is_eating(char *tmp);
-void			l_is_sleeping(char *tmp);
-void			l_is_thinking(char *tmp);
-void			l_has_died(char *tmp);
-int				ft_atoi(const char *nptr);
-#endif
+unsigned long	get_current_time(void)
+{
+	struct timeval	t;
+
+	gettimeofday(&t, NULL);
+	return ((t.tv_sec * (unsigned long)1000) + (t.tv_sec / 1000));
+}
