@@ -6,7 +6,7 @@
 #    By: otodd <otodd@student.42london.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 17:53:24 by otodd             #+#    #+#              #
-#    Updated: 2024/03/19 12:11:02 by otodd            ###   ########.fr        #
+#    Updated: 2024/03/19 12:22:10 by otodd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,20 +42,6 @@ dir:
 		mkdir -p obj; \
 	fi
 
-check_norminette:
-	@echo "[$(BLUE)PHILO$(NC)]	    Checking for errors with Norminette..."
-	@if [ $$(pip list | grep "norminette" | wc -l) -gt 1 ]; then \
-		echo "[$(RED)PHILO$(NC)]	    Norminette is not installed. Please install Norminette."; \
-		exit 1; \
-	else \
-		if [ $$(norminette src include | grep "Error:" | wc -l) -gt 0 ]; then \
-			echo "[$(RED)PHILO$(NC)]	    Norminette found errors."; \
-			exit 1; \
-		else \
-			echo "[$(GREEN)PHILO$(NC)]	    Norminette found no errors."; \
-		fi; \
-	fi
-
 $(NAME): $(OBJS)
 	@echo "[$(BLUE)PHILO$(NC)]	    Building $@..."
 	@$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBS) -o $(NAME)
@@ -66,11 +52,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/philo.h | dir
 
 
 clean:
-	@echo "[$(YELLOW)PHILO$(NC)]	    Cleaning object files..."
+	@echo "[$(YELLOW)PHILO$(NC)]	    Cleaning object directory..."
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@echo "[$(RED)PHILO$(NC)]	    Cleaning executable file..."
+	@echo "[$(RED)PHILO$(NC)]	    Cleaning executable directory..."
 	@rm -rf $(NAME)
 
 re: fclean all
