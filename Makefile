@@ -6,14 +6,15 @@
 #    By: otodd <otodd@student.42london.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 17:53:24 by otodd             #+#    #+#              #
-#    Updated: 2024/03/19 12:02:56 by otodd            ###   ########.fr        #
+#    Updated: 2024/03/19 12:11:02 by otodd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 YELLOW=\033[1;33m
 RED=\033[1;31m
 GREEN=\033[1;32m
-BLUE=\033[0;34m
+BLUE=\033[1;34m
+CYAN=\033[1;36m
 NC=\033[0m
 
 CC 		= cc
@@ -56,11 +57,11 @@ check_norminette:
 	fi
 
 $(NAME): $(OBJS)
-	@echo "[$(GREEN)PHILO$(NC)]	    Building $@..."
+	@echo "[$(BLUE)PHILO$(NC)]	    Building $@..."
 	@$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/philo.h | dir
-	@echo "[$(GREEN)PHILO$(NC)]	    Compiling $< --> $@"
+	@echo "[$(CYAN)PHILO$(NC)]	    Compiling $< --> $@"
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 
@@ -69,7 +70,7 @@ clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@echo "[$(YELLOW)PHILO$(NC)]	    Cleaning executable file..."
+	@echo "[$(RED)PHILO$(NC)]	    Cleaning executable file..."
 	@rm -rf $(NAME)
 
 re: fclean all
