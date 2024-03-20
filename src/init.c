@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/03/19 15:22:59 by otodd            ###   ########.fr       */
+/*   Updated: 2024/03/20 14:42:16 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ static void	*test_thread(void *i)
 	t_carbon	*tmp = (t_carbon *)i;
 	t_earth		*tmp2 = (t_earth *)tmp->earth;
 	
+	pthread_mutex_lock(&tmp2->lock);
 	tmp2->counter++;
 	printf("Thread [%d]: %d\n", tmp->id, tmp2->counter);
+	pthread_mutex_unlock(&tmp2->lock);
 	return (0);
 }
 
@@ -54,6 +56,6 @@ int	main(int arg_n, char **arg_a)
 	while (++i < earth->nop)
 		pthread_join(*earth->souls[i]->thread, NULL);
 	free(earth);
-	pthread_mutex_destroy(&earth->lock)
+	pthread_mutex_destroy(&earth->lock);
 	return (EXIT_SUCCESS);
 }
