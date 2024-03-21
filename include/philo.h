@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/03/19 14:51:59 by otodd            ###   ########.fr       */
+/*   Updated: 2024/03/20 18:00:36 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,24 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-enum e_state
+typedef enum e_state
 {
 	DEAD = 0,
 	EATING = 1,
 	SLEEPING = 2,
 	THINKING = 3
-};
+}	t_state;
 
 typedef struct s_carbon
 {
 	int			id;
 	int			meals_eaten;
-	int			state;
+	t_state		state;
 	int			nop;
 	int			ttd;
 	int			tte;
 	int			tts;
+	int			notepme;
 	pthread_t	*thread;
 	void		*earth;
 }	t_carbon;
@@ -51,6 +52,8 @@ typedef struct s_earth
 	int				notepme;
 	int				counter;
 	pthread_mutex_t	lock;
+	pthread_mutex_t	**forks;
+	pthread_mutex_t	write_lock;
 }	t_earth;
 
 unsigned long	get_current_time(void);
