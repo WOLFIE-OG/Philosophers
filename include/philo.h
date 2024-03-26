@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/03/21 19:01:43 by otodd            ###   ########.fr       */
+/*   Updated: 2024/03/25 19:24:19 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 # include "colour_codes.h"
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdatomic.h>
 # include <unistd.h>
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdbool.h>
 
-typedef enum e_state
+enum e_state
 {
 	NONE = 0,
 	DEAD = 1,
@@ -29,14 +30,14 @@ typedef enum e_state
 	EATING = 4,
 	SLEEPING = 5,
 	THINKING = 6
-}	t_state;
+};
 
 typedef struct s_carbon
 {
 	int				id;
-	int				meals_eaten;
-	unsigned long	last_ate;
-	t_state			state;
+	atomic_int		meals_eaten;
+	atomic_ulong	last_ate;
+	atomic_int		state;
 	pthread_t		thread;
 	void			*earth;
 	pthread_mutex_t	left_fork;
@@ -46,20 +47,16 @@ typedef struct s_carbon
 
 typedef struct s_earth
 {
-	bool			done;
-	t_carbon		*souls;
+	int				max_meals;
+	atomic_bool		solar_flare;
+	t_carbon		souls[250];
 	int				nop;
 	int				ttd;
 	int				tte;
 	int				tts;
 	int				notepme;
-	int				counter;
-	unsigned long	big_bang;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	lock;
+	pthread_mutex_t	forks[250];
 	pthread_mutex_t	write_lock;
-	pthread_mutex_t	done_lock;
-	pthread_mutex_t	eat_lock;
 }	t_earth;
 
 unsigned long	get_current_time(void);

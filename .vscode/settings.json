@@ -5,6 +5,7 @@
 		"time.h": "c",
 		"cstdlib": "c",
 		"semaphore.h": "c",
-		"chrono": "c"
+		"chrono": "c",
+		"atomic": "c"
 	}
 }
