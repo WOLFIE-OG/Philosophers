@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/03/25 19:26:09 by otodd            ###   ########.fr       */
+/*   Updated: 2024/03/26 16:32:08 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,42 +21,38 @@ static void	slumber(unsigned long time, t_earth *earth)
 	{
 		if ((get_current_time() - then) >= time)
 			break ;
-		usleep(50);
+		usleep(100);
 	}
 }
 
 static void	eating(t_carbon *carbon)
 {
-	t_earth *const	earth = (t_earth *)carbon->earth;
-
-	pthread_mutex_lock(&carbon->left_fork);
+	pthread_mutex_lock(carbon->left_fork);
 	carbon->state = GOT_FIRST_FORK;
 	l_taken_fork(carbon);
-	pthread_mutex_lock(&carbon->right_fork);
+	pthread_mutex_lock(carbon->right_fork);
 	carbon->state = GOT_SECOND_FORK;
 	l_taken_fork(carbon);
 	l_is_eating(carbon);
 	carbon->state = EATING;
 	carbon->meals_eaten++;
 	carbon->last_ate = get_current_time();
-	slumber(earth->tte, earth);
-	pthread_mutex_unlock(&carbon->left_fork);
-	pthread_mutex_unlock(&carbon->right_fork);
+	slumber(carbon->earth->tte, carbon->earth);
+	pthread_mutex_unlock(carbon->left_fork);
+	pthread_mutex_unlock(carbon->right_fork);
 }
 
 static void	*life(void *i)
 {
 	t_carbon *carbon;
-	t_earth *earth;
 
 	carbon = (t_carbon *)i;
-	earth = (t_earth *)carbon->earth;
-	while (!earth->solar_flare)
+	while (!carbon->earth->solar_flare)
 	{
 		eating(carbon);
 		l_is_sleeping(carbon);
 		carbon->state = SLEEPING;
-		slumber(earth->tts, earth);
+		slumber(carbon->earth->tts, carbon->earth);
 		l_is_thinking(carbon);
 		carbon->state = THINKING;
 	}
@@ -81,6 +77,7 @@ static bool	set_table(t_earth *earth)
 	int	i;
 
 	i = -1;
+	earth->forks = malloc(sizeof(pthread_mutex_t) * earth->nop);
 	while (++i < earth->nop)
 		if (pthread_mutex_init(&earth->forks[i], NULL))
 			return (false);
@@ -91,15 +88,17 @@ static void	invite_philos(t_earth *earth)
 {
 	int		i;
 
+	earth->souls = malloc(sizeof(t_carbon) * earth->nop);
 	i = -1;
 	while (++i < earth->nop)
 	{
-		earth->souls[i].id = i;
-		earth->souls[i].meals_eaten = 0;
-		earth->souls[i].state = NONE;
-		earth->souls[i].earth = earth;
-		earth->souls[i].left_fork = earth->forks[i];
-		earth->souls[i].right_fork = earth->forks[(i + 1) % earth->nop];
+		earth->souls[i] = malloc(sizeof(t_carbon));
+		earth->souls[i]->id = i;
+		earth->souls[i]->meals_eaten = 0;
+		earth->souls[i]->state = NONE;
+		earth->souls[i]->earth = earth;
+		earth->souls[i]->left_fork = &earth->forks[i];
+		earth->souls[i]->right_fork = &earth->forks[(i + 1) % earth->nop];
 	}
 }
 
@@ -110,16 +109,16 @@ static void	start_life(t_earth *earth)
 	i = -1;
 	while (++i < earth->nop)
 	{
-		earth->souls[i].last_ate = get_current_time();
-		pthread_create(&earth->souls[i].thread, 
-			NULL, life, &earth->souls[i]);
+		earth->souls[i]->last_ate = get_current_time();
+		pthread_create(&earth->souls[i]->thread, 
+			NULL, life, earth->souls[i]);
 	}
 	
 }
 
 static bool	create_locks(t_earth *earth)
 {
-	if(pthread_mutex_init(&earth->write_lock, NULL))
+	if (pthread_mutex_init(&earth->write_lock, NULL))
 		return (false);
 	if (!set_table(earth))
 		return (false);
@@ -134,7 +133,7 @@ static int	get_current_total_eaten_meals(t_earth *earth)
 	i = -1;
 	count = 0;
 	while (++i < earth->nop)
-		count += earth->souls[i].meals_eaten;
+		count += earth->souls[i]->meals_eaten;
 	return (count);
 }
 
@@ -145,9 +144,9 @@ static void	hell(t_earth *earth)
 	i = -1;
 	if (earth->nop >= 1)
 		while (++i < earth->nop)
-			pthread_join(earth->souls[i].thread, NULL);
+			pthread_join(earth->souls[i]->thread, NULL);
 	else
-		pthread_detach(earth->souls[0].thread);
+		pthread_detach(earth->souls[0]->thread);
 	pthread_mutex_destroy(&earth->write_lock);
 }
 
@@ -169,11 +168,11 @@ int	main(int arg_n, char **arg_a)
 	{
 		if (get_current_total_eaten_meals(&earth) == earth.notepme)
 			earth.solar_flare = true;
-		if ((int)(get_current_time() - earth.souls[i].last_ate) >= earth.ttd)
+		if ((int)(get_current_time() - earth.souls[i]->last_ate) >= earth.ttd)
 		{
 			earth.solar_flare = true;
-			l_has_died(&earth.souls[i]);
-			earth.souls[i].state = DEAD;
+			l_has_died(earth.souls[i]);
+			earth.souls[i]->state = DEAD;
 		}
 		i = (i + 1) % earth.nop;
 		usleep(100);

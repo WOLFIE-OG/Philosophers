@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/03/25 19:24:19 by otodd            ###   ########.fr       */
+/*   Updated: 2024/03/26 16:10:55 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ enum e_state
 	THINKING = 6
 };
 
+struct s_earth;
+
 typedef struct s_carbon
 {
 	int				id;
@@ -39,23 +41,23 @@ typedef struct s_carbon
 	atomic_ulong	last_ate;
 	atomic_int		state;
 	pthread_t		thread;
-	void			*earth;
-	pthread_mutex_t	left_fork;
-	pthread_mutex_t	right_fork;
-	pthread_mutex_t	soul_lock;
+	struct s_earth	*earth;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*soul_lock;
 }	t_carbon;
 
 typedef struct s_earth
 {
 	int				max_meals;
 	atomic_bool		solar_flare;
-	t_carbon		souls[250];
+	t_carbon		**souls;
 	int				nop;
 	int				ttd;
 	int				tte;
 	int				tts;
 	int				notepme;
-	pthread_mutex_t	forks[250];
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	write_lock;
 }	t_earth;
 

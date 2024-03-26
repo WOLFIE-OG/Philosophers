@@ -6,7 +6,7 @@
 #    By: otodd <otodd@student.42london.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 17:53:24 by otodd             #+#    #+#              #
-#    Updated: 2024/03/21 16:50:03 by otodd            ###   ########.fr        #
+#    Updated: 2024/03/26 16:21:21 by otodd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CYAN=\033[1;36m
 NC=\033[0m
 
 CC 			= 	cc
-CFLAGS 		= 	-Wall -Wextra -Werror -g
+CFLAGS 		= 	-Wall -Wextra -Werror -g -fsanitize=thread
 NAME		= 	philo
 
 SRC_DIR 	= 	src
