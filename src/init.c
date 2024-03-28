@@ -6,38 +6,64 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/03/26 16:32:08 by otodd            ###   ########.fr       */
+/*   Updated: 2024/03/27 18:26:47 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static void	slumber(unsigned long time, t_earth *earth)
+static void	slumber(unsigned long time, t_carbon *carbon)
 {
 	unsigned long	then;
 
 	then = get_current_time();
-	while (!earth->solar_flare)
+	while (!carbon->earth->solar_flare && carbon->state != DEAD)
 	{
 		if ((get_current_time() - then) >= time)
 			break ;
-		usleep(100);
+		usleep(50);
 	}
+}
+
+static int	get_total_soul_ready_count(t_earth *earth)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while (++i < earth->nop)
+		if (earth->souls[i]->ready)
+			count++;
+	return (count);
 }
 
 static void	eating(t_carbon *carbon)
 {
-	pthread_mutex_lock(carbon->left_fork);
-	carbon->state = GOT_FIRST_FORK;
-	l_taken_fork(carbon);
-	pthread_mutex_lock(carbon->right_fork);
-	carbon->state = GOT_SECOND_FORK;
-	l_taken_fork(carbon);
+	if (carbon->left_fork < carbon->right_fork)
+	{
+        pthread_mutex_lock(carbon->left_fork);
+		carbon->state = GOT_FIRST_FORK;
+		l_taken_fork(carbon);
+        pthread_mutex_lock(carbon->right_fork);
+		carbon->state = GOT_SECOND_FORK;
+		l_taken_fork(carbon);
+    }
+	else
+	{
+        pthread_mutex_lock(carbon->right_fork);
+		carbon->state = GOT_FIRST_FORK;
+		l_taken_fork(carbon);
+        pthread_mutex_lock(carbon->left_fork);
+		carbon->state = GOT_SECOND_FORK;
+		l_taken_fork(carbon);
+    }
 	l_is_eating(carbon);
 	carbon->state = EATING;
-	carbon->meals_eaten++;
+	if (carbon->earth->notepme != -1)
+		carbon->meals_eaten++;
 	carbon->last_ate = get_current_time();
-	slumber(carbon->earth->tte, carbon->earth);
+	slumber(carbon->earth->tte, carbon);
 	pthread_mutex_unlock(carbon->left_fork);
 	pthread_mutex_unlock(carbon->right_fork);
 }
@@ -47,18 +73,20 @@ static void	*life(void *i)
 	t_carbon *carbon;
 
 	carbon = (t_carbon *)i;
-	while (!carbon->earth->solar_flare)
+	carbon->ready = true;
+	while (get_total_soul_ready_count(carbon->earth) != carbon->earth->nop)
+		usleep(10);
+	while (!carbon->earth->solar_flare && carbon->state != DEAD)
 	{
 		eating(carbon);
 		l_is_sleeping(carbon);
 		carbon->state = SLEEPING;
-		slumber(carbon->earth->tts, carbon->earth);
+		slumber(carbon->earth->tts, carbon);
 		l_is_thinking(carbon);
 		carbon->state = THINKING;
 	}
 	return (NULL);
 }
-
 
 static void	parse_args(t_earth *earth, int arg_n, char **arg_a)
 {
@@ -97,6 +125,7 @@ static void	invite_philos(t_earth *earth)
 		earth->souls[i]->meals_eaten = 0;
 		earth->souls[i]->state = NONE;
 		earth->souls[i]->earth = earth;
+		earth->souls[i]->ready = false;
 		earth->souls[i]->left_fork = &earth->forks[i];
 		earth->souls[i]->right_fork = &earth->forks[(i + 1) % earth->nop];
 	}
@@ -113,7 +142,6 @@ static void	start_life(t_earth *earth)
 		pthread_create(&earth->souls[i]->thread, 
 			NULL, life, earth->souls[i]);
 	}
-	
 }
 
 static bool	create_locks(t_earth *earth)
@@ -142,11 +170,14 @@ static void	hell(t_earth *earth)
 	int	i;
 
 	i = -1;
-	if (earth->nop >= 1)
-		while (++i < earth->nop)
-			pthread_join(earth->souls[i]->thread, NULL);
-	else
-		pthread_detach(earth->souls[0]->thread);
+	while (++i < earth->nop)
+	{
+		pthread_join(earth->souls[i]->thread, NULL);
+		pthread_mutex_destroy(&earth->forks[i]);
+		free(earth->souls[i]);
+	}
+	free(earth->souls);
+	free(earth->forks);
 	pthread_mutex_destroy(&earth->write_lock);
 }
 
@@ -159,6 +190,7 @@ int	main(int arg_n, char **arg_a)
 	if (arg_n < 4)
 		return (EXIT_FAILURE);
 	earth.solar_flare = false;
+	earth.ready = false;
 	parse_args(&earth, arg_n, arg_a);
 	if (!create_locks(&earth))
 		return (EXIT_FAILURE);
@@ -166,17 +198,21 @@ int	main(int arg_n, char **arg_a)
 	start_life(&earth);
 	while (!earth.solar_flare)
 	{
-		if (get_current_total_eaten_meals(&earth) == earth.notepme)
-			earth.solar_flare = true;
+		if (earth.notepme != -1)
+			if (get_current_total_eaten_meals(&earth) >= earth.notepme)
+				earth.solar_flare = true;
 		if ((int)(get_current_time() - earth.souls[i]->last_ate) >= earth.ttd)
 		{
 			earth.solar_flare = true;
 			l_has_died(earth.souls[i]);
 			earth.souls[i]->state = DEAD;
+			pthread_mutex_unlock(earth.souls[i]->left_fork);
+			pthread_mutex_unlock(earth.souls[i]->right_fork);
 		}
 		i = (i + 1) % earth.nop;
-		usleep(100);
-	}
+		usleep(10);
+	}	
 	hell(&earth);
+	
 	return (EXIT_SUCCESS);
 }
