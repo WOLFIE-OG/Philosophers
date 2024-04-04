@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:25:00 by otodd             #+#    #+#             */
-/*   Updated: 2024/03/26 14:44:19 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/04 19:21:01 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,42 @@ unsigned long	get_current_time(void)
 
 	gettimeofday(&t, NULL);
 	return ((t.tv_sec * (unsigned long)1000) + (t.tv_usec / 1000));
+}
+
+void	slumber(unsigned long time, t_carbon *carbon)
+{
+	unsigned long	then;
+
+	then = get_current_time();
+	while (!carbon->earth->solar_flare && carbon->state != DEAD)
+	{
+		if ((get_current_time() - then) >= time)
+			break ;
+		usleep(50);
+	}
+}
+
+int	get_current_total_eaten_meals(t_earth *earth)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while (++i < earth->nop)
+		count += earth->souls[i]->meals_eaten;
+	return (count);
+}
+
+int	get_total_soul_ready_count(t_earth *earth)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while (++i < earth->nop)
+		if (earth->souls[i]->ready)
+			count++;
+	return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/03/26 18:35:49 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/04 19:23:28 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ enum e_state
 	THINKING = 6
 };
 
-struct s_earth;
+struct	s_earth;
 
 typedef struct s_carbon
 {
@@ -69,4 +69,14 @@ void			l_is_sleeping(t_carbon *c);
 void			l_is_thinking(t_carbon *c);
 void			l_has_died(t_carbon *c);
 int				ft_atoi(const char *nptr);
+void			slumber(unsigned long time, t_carbon *carbon);
+void			*life(void *i);
+int				get_current_total_eaten_meals(t_earth *earth);
+int				get_total_soul_ready_count(t_earth *earth);
+void			eating(t_carbon *carbon);
+void			invite_philos(t_earth *earth);
+bool			set_table(t_earth *earth);
+bool			create_locks(t_earth *earth);
+void			start_life(t_earth *earth);
+void			hell(t_earth *earth);
 #endif
