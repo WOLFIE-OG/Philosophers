@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:43:45 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/04 19:21:37 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/07 12:40:11 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,29 @@ void	start_life(t_earth *earth)
 		earth->souls[i]->last_ate = get_current_time();
 		pthread_create(&earth->souls[i]->thread,
 			NULL, life, earth->souls[i]);
+	}
+}
+
+void	bigbrother(t_earth *earth)
+{
+	int		i;
+
+	i = 0;
+	while (!earth->solar_flare)
+	{
+		if (earth->notepme != -1)
+			if (get_current_total_eaten_meals(earth) >= earth->notepme)
+				earth->solar_flare = true;
+		if ((int)(get_current_time() - earth->souls[i]->last_ate) >= earth->ttd)
+		{
+			earth->solar_flare = true;
+			l_has_died(earth->souls[i]);
+			earth->souls[i]->state = DEAD;
+			pthread_mutex_unlock(earth->souls[i]->left_fork);
+			pthread_mutex_unlock(earth->souls[i]->right_fork);
+		}
+		i = (i + 1) % earth->nop;
+		usleep(10);
 	}
 }
 
