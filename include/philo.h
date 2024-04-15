@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/07 12:44:39 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/15 14:23:56 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ typedef struct s_carbon
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*soul_lock;
-	atomic_bool		ready;
+	atomic_bool		is_ready;
+	atomic_bool		is_dead;
 }	t_carbon;
 
 typedef struct s_earth
 {
 	atomic_bool		solar_flare;
-	atomic_bool		ready;
 	t_carbon		**souls;
 	int				nop;
 	int				ttd;

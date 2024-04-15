@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/04 19:23:08 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/15 16:12:04 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	eating(t_carbon *carbon)
 {
 	take_fork(carbon);
 	l_is_eating(carbon);
+	carbon->last_ate = get_current_time();
 	carbon->state = EATING;
 	if (carbon->earth->notepme != -1)
 		carbon->meals_eaten++;
-	carbon->last_ate = get_current_time();
 	slumber(carbon->earth->tte, carbon);
 	pthread_mutex_unlock(carbon->left_fork);
 	pthread_mutex_unlock(carbon->right_fork);
@@ -72,7 +72,8 @@ void	invite_philos(t_earth *earth)
 		earth->souls[i]->meals_eaten = 0;
 		earth->souls[i]->state = NONE;
 		earth->souls[i]->earth = earth;
-		earth->souls[i]->ready = false;
+		earth->souls[i]->is_ready = false;
+		earth->souls[i]->is_dead = false;
 		earth->souls[i]->left_fork = &earth->forks[i];
 		earth->souls[i]->right_fork = &earth->forks[(i + 1) % earth->nop];
 	}

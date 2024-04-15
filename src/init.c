@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/07 12:59:30 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/15 14:23:18 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static bool	parse_args(t_earth *earth, int arg_n, char **arg_a)
 {
+	if (arg_n == 1 || arg_n > 6)
+		return (false);
 	if (!ft_ischeck_str(arg_a[1], ft_isdigit))
 		return (false);
 	earth->nop = ft_atoi(arg_a[1]);
@@ -41,10 +43,6 @@ int	main(int arg_n, char **arg_a)
 {
 	t_earth	earth;
 
-	if (arg_n < 4)
-		return (EXIT_FAILURE);
-	earth.solar_flare = false;
-	earth.ready = false;
 	if (!parse_args(&earth, arg_n, arg_a))
 	{
 		printf("Program usage: ");
@@ -54,6 +52,7 @@ int	main(int arg_n, char **arg_a)
 	}
 	if (!create_locks(&earth))
 		return (EXIT_FAILURE);
+	earth.solar_flare = false;
 	invite_philos(&earth);
 	start_life(&earth);
 	bigbrother(&earth);

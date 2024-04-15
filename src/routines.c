@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/04 19:21:55 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/15 14:24:18 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*life(void *i)
 	t_carbon	*carbon;
 
 	carbon = (t_carbon *)i;
-	carbon->ready = true;
+	carbon->is_ready = true;
 	while (get_total_soul_ready_count(carbon->earth) != carbon->earth->nop)
 		usleep(10);
 	while (!carbon->earth->solar_flare && carbon->state != DEAD)
