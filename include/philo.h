@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/15 14:23:56 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/17 16:51:46 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ struct	s_earth;
 
 typedef struct s_carbon
 {
-	int				id;
+	atomic_int		id;
 	atomic_int		meals_eaten;
 	atomic_ulong	last_ate;
 	atomic_int		state;

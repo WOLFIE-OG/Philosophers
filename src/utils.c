@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:25:00 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/15 15:48:16 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/17 16:51:43 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	slumber(unsigned long time, t_carbon *carbon)
 	{
 		if ((get_current_time() - then) >= time)
 			break ;
-		usleep(50);
+		usleep(carbon->earth->nop * 2);
 	}
 }
 
