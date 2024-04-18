@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/18 14:36:22 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/18 15:03:55 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_carbon
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*soul_lock;
 	atomic_bool		is_ready;
+	atomic_bool		is_stopped;
 	atomic_bool		is_dead;
 }	t_carbon;
 

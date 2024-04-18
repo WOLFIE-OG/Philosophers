@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/18 14:36:18 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/18 15:18:37 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	invite_philos(t_earth *earth)
 		earth->souls[i]->earth = earth;
 		earth->souls[i]->is_ready = false;
 		earth->souls[i]->is_dead = false;
+		earth->souls[i]->is_stopped = false;
 		earth->souls[i]->left_fork = &earth->forks[i];
 		earth->souls[i]->right_fork = &earth->forks[(i + 1) % earth->nop];
 	}

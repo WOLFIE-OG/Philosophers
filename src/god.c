@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:43:45 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/18 14:24:57 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/18 14:43:57 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	bigbrother(t_earth *earth)
 		if (earth->notepme != -1)
 			if (get_current_total_eaten_meals(earth) >= earth->notepme * earth->nop)
 				earth->solar_flare = true;
-		if ((int)(get_current_time() - earth->souls[i]->last_ate) >= earth->ttd + 1)
+		if ((int)(get_current_time() - earth->souls[i]->last_ate) > earth->ttd)
 		{
 			earth->solar_flare = true;
 			l_has_died(earth->souls[i]);
