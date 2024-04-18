@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/17 16:55:07 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/18 14:36:18 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void	take_fork(t_carbon *carbon)
 
 void	eating(t_carbon *carbon)
 {
+	if (carbon->earth->solar_flare)
+		return ;
 	take_fork(carbon);
 	l_is_eating(carbon);
 	carbon->last_ate = get_current_time();
