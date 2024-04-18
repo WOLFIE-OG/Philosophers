@@ -6,7 +6,7 @@
 #    By: otodd <otodd@student.42london.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 17:53:24 by otodd             #+#    #+#              #
-#    Updated: 2024/04/04 19:17:00 by otodd            ###   ########.fr        #
+#    Updated: 2024/04/18 17:09:23 by otodd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CYAN=\033[1;36m
 NC=\033[0m
 
 CC 			= 	cc
-CFLAGS 		= 	-Wall -Wextra -Werror -g
+CFLAGS 		= 	-Wall -Wextra -Werror
 NAME		= 	philo
 
 SRC_DIR 	= 	src
@@ -28,6 +28,7 @@ INC_DIR 	= 	include
 SRCS		= 	$(SRC_DIR)/init.c			\
 				$(SRC_DIR)/logging.c		\
 				$(SRC_DIR)/utils.c			\
+				$(SRC_DIR)/utils_2.c		\
 				$(SRC_DIR)/ft_atoi.c		\
 				$(SRC_DIR)/ft_ischeck_str.c	\
 				$(SRC_DIR)/ft_isdigit.c		\
@@ -65,7 +66,5 @@ fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean all
-
-norm: check_norminette all
 
 .PHONY: all clean fclean re norm

@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:43:45 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/18 14:43:57 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/18 17:10:56 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	bigbrother(t_earth *earth)
 	while (!earth->solar_flare)
 	{
 		if (earth->notepme != -1)
-			if (get_current_total_eaten_meals(earth) >= earth->notepme * earth->nop)
+			if (get_current_total_eaten_meals(earth)
+				>= earth->notepme * earth->nop)
 				earth->solar_flare = true;
 		if ((int)(get_current_time() - earth->souls[i]->last_ate) > earth->ttd)
 		{
@@ -41,8 +42,10 @@ void	bigbrother(t_earth *earth)
 			l_has_died(earth->souls[i]);
 			earth->souls[i]->state = DEAD;
 			earth->souls[i]->is_dead = true;
-			pthread_mutex_unlock(earth->souls[i]->left_fork);
-			pthread_mutex_unlock(earth->souls[i]->right_fork);
+			if (earth->souls[i]->left_fork->is_locked)
+				unlock_mutex(earth->souls[i]->left_fork);
+			if (earth->souls[i]->right_fork->is_locked)
+				unlock_mutex(earth->souls[i]->right_fork);
 		}
 		i = (i + 1) % earth->nop;
 	}
@@ -50,7 +53,8 @@ void	bigbrother(t_earth *earth)
 
 bool	create_locks(t_earth *earth)
 {
-	if (pthread_mutex_init(&earth->write_lock, NULL))
+	earth->write_lock = malloc(sizeof(t_mutex));
+	if (pthread_mutex_init(&earth->write_lock->mutex, NULL))
 		return (false);
 	if (!set_table(earth))
 		return (false);
@@ -61,14 +65,19 @@ void	hell(t_earth *earth)
 {
 	int	i;
 
+	while (!are_souls_finished(earth))
+		usleep(100);
+	i = -1;
+	while (++i < earth->nop)
+		pthread_join(earth->souls[i]->thread, NULL);
 	i = -1;
 	while (++i < earth->nop)
 	{
-		pthread_join(earth->souls[i]->thread, NULL);
-		pthread_mutex_destroy(&earth->forks[i]);
+		pthread_mutex_destroy(&earth->forks[i].mutex);
 		free(earth->souls[i]);
 	}
 	free(earth->souls);
 	free(earth->forks);
-	pthread_mutex_destroy(&earth->write_lock);
+	pthread_mutex_destroy(&earth->write_lock->mutex);
+	free(earth->write_lock);
 }

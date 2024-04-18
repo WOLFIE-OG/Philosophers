@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:25:00 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/17 16:51:43 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/18 17:09:41 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,20 @@ int	get_total_soul_ready_count(t_earth *earth)
 		if (earth->souls[i]->is_ready)
 			count++;
 	return (count);
+}
+
+bool	are_souls_finished(t_earth *earth)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while (++i < earth->nop)
+		if (earth->souls[i]->is_finished)
+			count++;
+	if (count == earth->nop)
+		return (true);
+	else
+		return (false);
 }

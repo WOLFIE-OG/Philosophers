@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/17 16:54:49 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/18 15:29:34 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ void	*life(void *i)
 		l_is_thinking(carbon);
 		carbon->state = THINKING;
 	}
+	carbon->is_finished = true;
 	return (NULL);
 }

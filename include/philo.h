@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/18 15:03:55 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/18 17:10:39 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ enum e_state
 
 struct	s_earth;
 
+typedef struct s_mutex
+{
+	pthread_mutex_t	mutex;
+	atomic_bool		is_locked;
+}	t_mutex;
+
 typedef struct s_carbon
 {
 	atomic_int		id;
@@ -42,11 +48,10 @@ typedef struct s_carbon
 	atomic_int		state;
 	pthread_t		thread;
 	struct s_earth	*earth;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*soul_lock;
+	t_mutex			*left_fork;
+	t_mutex			*right_fork;
 	atomic_bool		is_ready;
-	atomic_bool		is_stopped;
+	atomic_bool		is_finished;
 	atomic_bool		is_dead;
 }	t_carbon;
 
@@ -59,8 +64,8 @@ typedef struct s_earth
 	int				tte;
 	int				tts;
 	int				notepme;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	write_lock;
+	t_mutex			*forks;
+	t_mutex			*write_lock;
 }	t_earth;
 
 unsigned long	get_current_time(void);
@@ -83,4 +88,7 @@ bool			create_locks(t_earth *earth);
 void			start_life(t_earth *earth);
 void			hell(t_earth *earth);
 void			bigbrother(t_earth *earth);
+bool			are_souls_finished(t_earth *earth);
+void			lock_mutex(t_mutex *mutex);
+void			unlock_mutex(t_mutex *mutex);
 #endif
