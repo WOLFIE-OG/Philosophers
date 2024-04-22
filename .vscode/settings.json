@@ -6,6 +6,11 @@
 		"cstdlib": "c",
 		"semaphore.h": "c",
 		"chrono": "c",
-		"atomic": "c"
+		"atomic": "c",
+		"signal.h": "c",
+		"stdio.h": "c",
+		"stdbool.h": "c",
+		"pthread.h": "c",
+		"numbers": "c"
 	}
 }

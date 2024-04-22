@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/22 15:51:27 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/22 18:07:11 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdbool.h>
+# include <semaphore.h>
+# include <signal.h>
+# include <fcntl.h>
+
+# define SEM_FORKS "/forks"
+# define SEM_WRITE "/write"
+# define SEM_DEAD "/dead"
+# define SEM_EATEN "/eaten"
 
 enum e_state
 {
@@ -34,38 +42,35 @@ enum e_state
 
 struct	s_earth;
 
-typedef struct s_mutex
-{
-	pthread_mutex_t	mutex;
-	atomic_bool		is_locked;
-}	t_mutex;
-
 typedef struct s_carbon
 {
 	atomic_int		id;
 	atomic_int		meals_eaten;
 	atomic_ulong	last_ate;
 	atomic_int		state;
-	pthread_t		thread;
+	pid_t			pid;
 	struct s_earth	*earth;
-	t_mutex			*left_fork;
-	t_mutex			*right_fork;
-	atomic_bool		is_ready;
-	atomic_bool		is_finished;
 	atomic_bool		is_dead;
+	pthread_t		bigbrother;
 }	t_carbon;
 
 typedef struct s_earth
 {
-	atomic_bool		solar_flare;
-	t_carbon		**souls;
-	int				nop;
-	int				ttd;
-	int				tte;
-	int				tts;
-	int				notepme;
-	t_mutex			*forks;
-	t_mutex			*write_lock;
+	t_carbon	**souls;
+	int			nop;
+	int			ttd;
+	int			tte;
+	int			tts;
+	int			notepme;
+	sem_t		*forks;
+	sem_t		*write_lock;
+	sem_t		*death;
+	sem_t		*eaten;
+	pthread_t	eat_trigger;
+	pthread_t	death_trigger;
+	atomic_bool	has_died;
+	atomic_bool	has_max_eat;
+	atomic_bool	is_parent;
 }	t_earth;
 
 unsigned long	get_current_time(void);
@@ -79,16 +84,8 @@ int				ft_isdigit(int c);
 int				ft_ischeck_str(char *str, int (*f)(int));
 void			slumber(unsigned long time, t_carbon *carbon);
 void			*life(void *i);
-int				get_current_total_eaten_meals(t_earth *earth);
-int				get_total_soul_ready_count(t_earth *earth);
 void			eating(t_carbon *carbon);
 void			invite_philos(t_earth *earth);
-bool			set_table(t_earth *earth);
-bool			create_locks(t_earth *earth);
-void			start_life(t_earth *earth);
 void			hell(t_earth *earth);
-void			bigbrother(t_earth *earth);
-bool			are_souls_finished(t_earth *earth);
-void			lock_mutex(t_mutex *mutex);
-void			unlock_mutex(t_mutex *mutex);
+void			*bigbrother(void *c);
 #endif
