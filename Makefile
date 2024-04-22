@@ -6,7 +6,7 @@
 #    By: otodd <otodd@student.42london.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 17:53:24 by otodd             #+#    #+#              #
-#    Updated: 2024/04/18 17:09:23 by otodd            ###   ########.fr        #
+#    Updated: 2024/04/22 13:02:47 by otodd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,54 +17,19 @@ BLUE=\033[1;34m
 CYAN=\033[1;36m
 NC=\033[0m
 
-CC 			= 	cc
-CFLAGS 		= 	-Wall -Wextra -Werror
-NAME		= 	philo
+all: philo_standard
 
-SRC_DIR 	= 	src
-OBJ_DIR 	= 	obj
-INC_DIR 	= 	include
-
-SRCS		= 	$(SRC_DIR)/init.c			\
-				$(SRC_DIR)/logging.c		\
-				$(SRC_DIR)/utils.c			\
-				$(SRC_DIR)/utils_2.c		\
-				$(SRC_DIR)/ft_atoi.c		\
-				$(SRC_DIR)/ft_ischeck_str.c	\
-				$(SRC_DIR)/ft_isdigit.c		\
-				$(SRC_DIR)/routines.c		\
-				$(SRC_DIR)/god.c			\
-				$(SRC_DIR)/table.c
-
-OBJS 		= 	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-
-HEADERS		= 	-I$(INC_DIR)
-
-all: $(NAME)
-
-dir:
-	@if [ ! -d "obj" ]; then \
-		echo "[$(GREEN)PHILO$(NC)]	    Creating obj directory..."; \
-		mkdir -p obj; \
-	fi
-
-$(NAME): $(OBJS)
-	@echo "[$(BLUE)PHILO$(NC)]	    Building $@..."
-	@$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBS) -o $(NAME)
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/philo.h | dir
-	@echo "[$(CYAN)PHILO$(NC)]	    Compiling $< --> $@"
-	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
-
+philo_standard:
+	@$(MAKE) -s -C philo
 
 clean:
 	@echo "[$(YELLOW)PHILO$(NC)]	    Cleaning object directory..."
-	@rm -rf $(OBJ_DIR)
+	@$(MAKE) -s -C philo clean
 
 fclean: clean
 	@echo "[$(RED)PHILO$(NC)]	    Cleaning executable directory..."
-	@rm -rf $(NAME)
+	@$(MAKE) -s -C philo fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re norm
+.PHONY: all clean fclean re
