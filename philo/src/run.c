@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 18:05:11 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/23 18:24:52 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	ft_monitor(t_ctx *ctx)
 				ctx->stop = true;
 		if ((int)(ft_get_current_time() - ctx->philos[i]->last_ate) > ctx->ttd)
 		{
-			ctx->stop = true;
 			ft_has_died(ctx->philos[i]);
+			ctx->stop = true;
 			ctx->philos[i]->is_dead = true;
 			if (ctx->philos[i]->left_fork->is_locked)
 				ft_unlock_mutex(ctx->philos[i]->left_fork);

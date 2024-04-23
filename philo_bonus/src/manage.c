@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 17:28:47 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/23 18:39:22 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	ft_launch(t_ctx *ctx)
 			ft_routine(&ctx->philos[i]);
 			exit(0);
 		}
+		usleep(100);
 	}
 }
 

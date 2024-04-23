@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 17:28:50 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/23 18:38:32 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,13 @@ static void	*ft_monitor(void	*p)
 			sem_post(philo->ctx->death);
 			break ;
 		}
-		if (philo->meals_eaten >= philo->ctx->notepme)
+		if (philo->ctx->notepme != -1)
 		{
-			sem_post(philo->ctx->death);
-			break ;
+			if (philo->meals_eaten >= philo->ctx->notepme)
+			{
+				sem_post(philo->ctx->death);
+				break ;
+			}
 		}
 	}
 	return (NULL);
