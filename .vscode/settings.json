@@ -11,6 +11,8 @@
 		"stdio.h": "c",
 		"stdbool.h": "c",
 		"pthread.h": "c",
-		"numbers": "c"
+		"numbers": "c",
+		"fcntl.h": "c",
+		"wait.h": "c"
 	}
 }
