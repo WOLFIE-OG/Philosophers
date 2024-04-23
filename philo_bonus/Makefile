@@ -6,7 +6,7 @@
 #    By: otodd <otodd@student.42london.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 17:53:24 by otodd             #+#    #+#              #
-#    Updated: 2024/04/23 17:18:12 by otodd            ###   ########.fr        #
+#    Updated: 2024/04/23 17:29:04 by otodd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ $(NAME): $(OBJS)
 	@echo "[$(BLUE)PHILO$(NC)]	    Building standard $@..."
 	@$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBS) -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/philo.h | dir
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/philo_bonus.h | dir
 	@echo "[$(CYAN)PHILO$(NC)]	    Compiling $< --> $@"
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 

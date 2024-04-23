@@ -6,11 +6,11 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:21:18 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 17:09:16 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/23 17:28:43 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../include/philo_bonus.h"
 
 void	ft_taken_fork(t_philo *philo)
 {
