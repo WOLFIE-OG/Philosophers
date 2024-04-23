@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/22 15:51:27 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/23 18:04:55 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,7 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-enum e_state
-{
-	NONE = 0,
-	DEAD = 1,
-	GOT_FIRST_FORK = 2,
-	GOT_SECOND_FORK = 3,
-	EATING = 4,
-	SLEEPING = 5,
-	THINKING = 6
-};
-
-struct	s_earth;
+struct	s_ctx;
 
 typedef struct s_mutex
 {
@@ -40,25 +29,24 @@ typedef struct s_mutex
 	atomic_bool		is_locked;
 }	t_mutex;
 
-typedef struct s_carbon
+typedef struct s_philo
 {
 	atomic_int		id;
 	atomic_int		meals_eaten;
 	atomic_ulong	last_ate;
-	atomic_int		state;
 	pthread_t		thread;
-	struct s_earth	*earth;
+	struct s_ctx	*ctx;
 	t_mutex			*left_fork;
 	t_mutex			*right_fork;
 	atomic_bool		is_ready;
 	atomic_bool		is_finished;
 	atomic_bool		is_dead;
-}	t_carbon;
+}	t_philo;
 
-typedef struct s_earth
+typedef struct s_ctx
 {
-	atomic_bool		solar_flare;
-	t_carbon		**souls;
+	atomic_bool		stop;
+	t_philo			**philos;
 	int				nop;
 	int				ttd;
 	int				tte;
@@ -66,29 +54,41 @@ typedef struct s_earth
 	int				notepme;
 	t_mutex			*forks;
 	t_mutex			*write_lock;
-}	t_earth;
+}	t_ctx;
 
-unsigned long	get_current_time(void);
-void			l_taken_fork(t_carbon *c);
-void			l_is_eating(t_carbon *c);
-void			l_is_sleeping(t_carbon *c);
-void			l_is_thinking(t_carbon *c);
-void			l_has_died(t_carbon *c);
+// ft_utils.c
+
 int				ft_atoi(const char *nptr);
 int				ft_isdigit(int c);
 int				ft_ischeck_str(char *str, int (*f)(int));
-void			slumber(unsigned long time, t_carbon *carbon);
-void			*life(void *i);
-int				get_current_total_eaten_meals(t_earth *earth);
-int				get_total_soul_ready_count(t_earth *earth);
-void			eating(t_carbon *carbon);
-void			invite_philos(t_earth *earth);
-bool			set_table(t_earth *earth);
-bool			create_locks(t_earth *earth);
-void			start_life(t_earth *earth);
-void			hell(t_earth *earth);
-void			bigbrother(t_earth *earth);
-bool			are_souls_finished(t_earth *earth);
-void			lock_mutex(t_mutex *mutex);
-void			unlock_mutex(t_mutex *mutex);
+
+// logging.c
+
+void			ft_taken_fork(t_philo *philo);
+void			ft_is_eating(t_philo *philo);
+void			ft_is_sleeping(t_philo *philo);
+void			ft_is_thinking(t_philo *philo);
+void			ft_has_died(t_philo *philo);
+
+// manage.c
+
+void			ft_init_philos(t_ctx *ctx);
+void			ft_init_mutexes(t_ctx *ctx);
+void			ft_exit(t_ctx *ctx);
+void			ft_create_threads(t_ctx *ctx);
+unsigned long	ft_get_current_time(void);
+
+// run.c
+
+void			ft_monitor(t_ctx *ctx);
+void			*ft_routine(void *p);
+
+// utils.c
+
+int				ft_get_current_total_eaten_meals(t_ctx *ctx);
+int				ft_get_total_philo_ready_count(t_ctx *ctx);
+bool			ft_are_philos_finished(t_ctx *ctx);
+void			ft_lock_mutex(t_mutex *mutex);
+void			ft_unlock_mutex(t_mutex *mutex);
+
 #endif

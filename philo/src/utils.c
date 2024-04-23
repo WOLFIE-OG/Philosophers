@@ -6,70 +6,61 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:25:00 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/18 17:09:41 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/23 18:05:00 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-unsigned long	get_current_time(void)
-{
-	struct timeval	t;
-
-	gettimeofday(&t, NULL);
-	return ((t.tv_sec * (unsigned long)1000) + (t.tv_usec / 1000));
-}
-
-void	slumber(unsigned long time, t_carbon *carbon)
-{
-	unsigned long	then;
-
-	then = get_current_time();
-	while (!carbon->earth->solar_flare && carbon->state != DEAD)
-	{
-		if ((get_current_time() - then) >= time)
-			break ;
-		usleep(carbon->earth->nop * 2);
-	}
-}
-
-int	get_current_total_eaten_meals(t_earth *earth)
+int	ft_get_current_total_eaten_meals(t_ctx *ctx)
 {
 	int	i;
 	int	count;
 
 	i = -1;
 	count = 0;
-	while (++i < earth->nop)
-		count += earth->souls[i]->meals_eaten;
+	while (++i < ctx->nop)
+		count += ctx->philos[i]->meals_eaten;
 	return (count);
 }
 
-int	get_total_soul_ready_count(t_earth *earth)
+int	ft_get_total_philo_ready_count(t_ctx *ctx)
 {
 	int	i;
 	int	count;
 
 	i = -1;
 	count = 0;
-	while (++i < earth->nop)
-		if (earth->souls[i]->is_ready)
+	while (++i < ctx->nop)
+		if (ctx->philos[i]->is_ready)
 			count++;
 	return (count);
 }
 
-bool	are_souls_finished(t_earth *earth)
+bool	ft_are_philos_finished(t_ctx *ctx)
 {
 	int	i;
 	int	count;
 
 	i = -1;
 	count = 0;
-	while (++i < earth->nop)
-		if (earth->souls[i]->is_finished)
+	while (++i < ctx->nop)
+		if (ctx->philos[i]->is_finished)
 			count++;
-	if (count == earth->nop)
+	if (count == ctx->nop)
 		return (true);
 	else
 		return (false);
+}
+
+void	ft_lock_mutex(t_mutex *mutex)
+{
+	pthread_mutex_lock(&mutex->mutex);
+	mutex->is_locked = true;
+}
+
+void	ft_unlock_mutex(t_mutex *mutex)
+{
+	pthread_mutex_unlock(&mutex->mutex);
+	mutex->is_locked = false;
 }

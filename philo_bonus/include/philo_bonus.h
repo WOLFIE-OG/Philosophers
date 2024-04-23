@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 17:28:33 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/23 17:58:27 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,22 +62,22 @@ int				ft_ischeck_str(char *str, int (*f)(int));
 
 // logging.c
 
-void			ft_taken_fork(t_philo *c);
-void			ft_is_eating(t_philo *c);
-void			ft_is_sleeping(t_philo *c);
-void			ft_is_thinking(t_philo *c);
-void			ft_has_died(t_philo *c);
+void			ft_taken_fork(t_philo *philo);
+void			ft_is_eating(t_philo *philo);
+void			ft_is_sleeping(t_philo *philo);
+void			ft_is_thinking(t_philo *philo);
+void			ft_has_died(t_philo *philo);
 
 // manage.c
 
-void			ft_init_philos(t_ctx *earth);
+void			ft_init_philos(t_ctx *ctx);
 void			ft_init_semaphores(t_ctx *ctx);
-void			ft_exit(t_ctx *earth);
+void			ft_exit(t_ctx *ctx);
 void			ft_launch(t_ctx *ctx);
 unsigned long	ft_get_current_time(void);
 
 // run.c
 
-void			ft_routine(t_philo *carbon);
+void			ft_routine(t_philo *philo);
 
 #endif

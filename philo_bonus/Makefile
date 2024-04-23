@@ -6,7 +6,7 @@
 #    By: otodd <otodd@student.42london.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 17:53:24 by otodd             #+#    #+#              #
-#    Updated: 2024/04/23 17:29:04 by otodd            ###   ########.fr        #
+#    Updated: 2024/04/23 17:56:36 by otodd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,11 @@ SRC_DIR 	= 	src
 OBJ_DIR 	= 	obj
 INC_DIR 	= 	include
 
-SRCS		= 	$(SRC_DIR)/init.c			\
+SRCS		= 	$(SRC_DIR)/ft_utils.c		\
+				$(SRC_DIR)/init.c			\
 				$(SRC_DIR)/logging.c		\
-				$(SRC_DIR)/ft_utils.c		\
-				$(SRC_DIR)/run.c			\
-				$(SRC_DIR)/manage.c			
+				$(SRC_DIR)/manage.c			\
+				$(SRC_DIR)/run.c
 
 OBJS 		= 	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

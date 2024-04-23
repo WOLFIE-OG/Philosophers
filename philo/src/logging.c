@@ -6,75 +6,75 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:21:18 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/22 15:51:18 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/23 18:13:27 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	l_taken_fork(t_carbon *c)
+void	ft_taken_fork(t_philo *philo)
 {
-	if (!c->earth->solar_flare)
+	if (!philo->ctx->stop)
 	{
-		lock_mutex(c->earth->write_lock);
+		ft_lock_mutex(philo->ctx->write_lock);
 		printf(
 			BBLU"%ld"RESET" %d has taken a fork\n",
-			get_current_time(),
-			c->id + 1
+			ft_get_current_time(),
+			philo->id + 1
 			);
-		unlock_mutex(c->earth->write_lock);
+		ft_unlock_mutex(philo->ctx->write_lock);
 	}
 }
 
-void	l_is_eating(t_carbon *c)
+void	ft_is_eating(t_philo *philo)
 {
-	if (!c->earth->solar_flare)
+	if (!philo->ctx->stop)
 	{
-		lock_mutex(c->earth->write_lock);
+		ft_lock_mutex(philo->ctx->write_lock);
 		printf(
 			BCYN"%ld"RESET" %d is eating\n",
-			get_current_time(),
-			c->id + 1
+			ft_get_current_time(),
+			philo->id + 1
 			);
-		unlock_mutex(c->earth->write_lock);
+		ft_unlock_mutex(philo->ctx->write_lock);
 	}
 }
 
-void	l_is_sleeping(t_carbon *c)
+void	ft_is_sleeping(t_philo *philo)
 {
-	if (!c->earth->solar_flare)
+	if (!philo->ctx->stop)
 	{
-		lock_mutex(c->earth->write_lock);
+		ft_lock_mutex(philo->ctx->write_lock);
 		printf(
 			BHMAG"%ld"RESET" %d is sleeping\n",
-			get_current_time(),
-			c->id + 1
+			ft_get_current_time(),
+			philo->id + 1
 			);
-		unlock_mutex(c->earth->write_lock);
+		ft_unlock_mutex(philo->ctx->write_lock);
 	}
 }
 
-void	l_is_thinking(t_carbon *c)
+void	ft_is_thinking(t_philo *philo)
 {
-	if (!c->earth->solar_flare)
+	if (!philo->ctx->stop)
 	{
-		lock_mutex(c->earth->write_lock);
+		ft_lock_mutex(philo->ctx->write_lock);
 		printf(
 			BYEL"%ld"RESET" %d is thinking\n",
-			get_current_time(),
-			c->id + 1
+			ft_get_current_time(),
+			philo->id + 1
 			);
-		unlock_mutex(c->earth->write_lock);
+		ft_unlock_mutex(philo->ctx->write_lock);
 	}
 }
 
-void	l_has_died(t_carbon *c)
+void	ft_has_died(t_philo *philo)
 {
-	lock_mutex(c->earth->write_lock);
+	ft_lock_mutex(philo->ctx->write_lock);
 	printf(
 		BRED"%ld"RESET" %d has died\n",
-		get_current_time(),
-		c->id + 1
+		ft_get_current_time(),
+		philo->id + 1
 		);
-	unlock_mutex(c->earth->write_lock);
+	ft_unlock_mutex(philo->ctx->write_lock);
 }
