@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/24 17:47:30 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 18:25:04 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@ void	ft_exit(t_ctx *ctx)
 	free(ctx->philos);
 }
 
+static void	*death_trigger(void *c)
+{
+	t_ctx	*ctx;
+
+	ctx = (t_ctx *)c;
+	sem_wait(ctx->stop);
+	ft_exit(ctx);
+	exit(EXIT_FAILURE);
+}
+
 void	ft_launch(t_ctx *ctx)
 {
 	int	i;
@@ -65,6 +75,7 @@ void	ft_launch(t_ctx *ctx)
 			exit(0);
 		}
 	}
+	pthread_create(&ctx->death_trigger, NULL, death_trigger, ctx);
 }
 
 unsigned long	ft_get_current_time(void)

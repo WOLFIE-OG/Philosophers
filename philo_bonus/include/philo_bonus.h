@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/24 16:22:22 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 18:17:42 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/time.h>
+# include <sys/wait.h>
 
 # define SEM_FORKS "/forks"
 # define SEM_WRITE "/write"

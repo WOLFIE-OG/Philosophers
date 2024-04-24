@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/24 17:39:26 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 18:24:51 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,19 @@ static bool	ft_parse_args(t_ctx *ctx, int arg_n, char **arg_a)
 	return (true);
 }
 
+static void	wait_process(t_ctx *ctx)
+{
+	int	i;
+
+	i = 0;
+	while (i < ctx->nop)
+	{
+		waitpid(ctx->philos[i].pid, NULL, 0);
+		i++;
+	}
+}
+
+
 int	main(int arg_n, char **arg_a)
 {
 	t_ctx	ctx;
@@ -53,7 +66,7 @@ int	main(int arg_n, char **arg_a)
 	ft_init_semaphores(&ctx);
 	ft_init_philos(&ctx);
 	ft_launch(&ctx);
-	sem_wait(ctx.stop);
+	wait_process(&ctx);
 	ft_exit(&ctx);
 	return (EXIT_SUCCESS);
 }
