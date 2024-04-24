@@ -28,6 +28,9 @@ jobs:
 
     - name: Tree
       run: tree
+
+    - name: Run norminette
+      run: norminette philo philo_bonus
   
     - name: Make program
       run: make
