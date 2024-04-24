@@ -14,6 +14,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Update
+      run: sudo apt-get update --fix-missing
+    
+    - name: Get valgrind
+      run: sudo apt-get install valgrind
+
     - name: Install tree
       run: sudo apt-get install tree
 
@@ -25,3 +31,21 @@ jobs:
 
     - name: Re-make program
       run: make re
+    
+    - name: Run standard
+      run: ./philo/philo 5 800 200 200 20
+
+    - name: Run standard with valgrind
+      run: valgrind -s ./philo/philo 5 8000000 200 200 20
+
+    - name: Run standard with helgrind
+      run: valgrind --tool=helgrind -s ./philo/philo 10 8000000 200 200 20
+    
+    - name: Run bonus
+      run: ./philo_bonus/philo_bonus 5 800 200 200 20
+
+    - name: Run bonus with valgrind
+      run: valgrind -s ./philo_bonus/philo_bonus 5 8000000 200 200 20
+
+    - name: Run bonus with helgrind
+      run: valgrind --tool=helgrind -s ./philo_bonus/philo_bonus 10 8000000 200 200 20
