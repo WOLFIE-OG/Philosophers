@@ -6,7 +6,7 @@ Eat, Sleep, Spaghetti, repeat. This project is about learning how threads work b
 
 [![Philosophers Build](https://img.shields.io/github/actions/workflow/status/WOLFIE-OG/Philosophers/makefile.yml?style=for-the-badge)](https://github.com/WOLFIE-OG/Philosophers/actions/workflows/makefile.yml) ![Philosophers Score](https://img.shields.io/badge/Score-Na-grey?style=for-the-badge)
 
-## Installation & Building
+## Installation & Building [Standard]
 
 To install and build
 
@@ -14,6 +14,18 @@ To install and build
   git clone https://github.com/WOLFIE-OG/Philosophers
   cd Philosophers
   make
+  cd philo
   ./philo <number_of_philosophers> <time_to_die time_to_eat> <time_to_sleep> [number_of_times_each_philosopher_must_eat]
 ```
     
+## Installation & Building [Bonus]
+
+To install and build
+
+```bash
+  git clone https://github.com/WOLFIE-OG/Philosophers
+  cd Philosophers
+  make
+  cd philo_bonus
+  ./philo_bonus <number_of_philosophers> <time_to_die time_to_eat> <time_to_sleep> [number_of_times_each_philosopher_must_eat]
+```
