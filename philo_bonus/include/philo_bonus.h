@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/24 18:17:42 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 18:28:24 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ typedef struct s_ctx
 int				ft_atoi(const char *nptr);
 int				ft_isdigit(int c);
 int				ft_ischeck_str(char *str, int (*f)(int));
+
+// init.c
+
+void			wait_process(t_ctx *ctx);
+void			*death_trigger(void *c);
 
 // logging.c
 

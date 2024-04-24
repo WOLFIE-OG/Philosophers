@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/24 18:25:04 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 18:27:27 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,6 @@ void	ft_exit(t_ctx *ctx)
 	sem_close(ctx->forks);
 	sem_close(ctx->write_lock);
 	free(ctx->philos);
-}
-
-static void	*death_trigger(void *c)
-{
-	t_ctx	*ctx;
-
-	ctx = (t_ctx *)c;
-	sem_wait(ctx->stop);
-	ft_exit(ctx);
-	exit(EXIT_FAILURE);
 }
 
 void	ft_launch(t_ctx *ctx)

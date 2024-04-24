@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/24 18:24:51 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 18:28:31 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool	ft_parse_args(t_ctx *ctx, int arg_n, char **arg_a)
 	return (true);
 }
 
-static void	wait_process(t_ctx *ctx)
+void	wait_process(t_ctx *ctx)
 {
 	int	i;
 
@@ -51,6 +51,15 @@ static void	wait_process(t_ctx *ctx)
 	}
 }
 
+void	*death_trigger(void *c)
+{
+	t_ctx	*ctx;
+
+	ctx = (t_ctx *)c;
+	sem_wait(ctx->stop);
+	ft_exit(ctx);
+	exit(EXIT_FAILURE);
+}
 
 int	main(int arg_n, char **arg_a)
 {
