@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/24 18:28:31 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 18:41:46 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool	ft_parse_args(t_ctx *ctx, int arg_n, char **arg_a)
 	return (true);
 }
 
-void	wait_process(t_ctx *ctx)
+void	ft_wait_process(t_ctx *ctx)
 {
 	int	i;
 
@@ -51,7 +51,7 @@ void	wait_process(t_ctx *ctx)
 	}
 }
 
-void	*death_trigger(void *c)
+void	*ft_death_trigger(void *c)
 {
 	t_ctx	*ctx;
 
@@ -75,7 +75,7 @@ int	main(int arg_n, char **arg_a)
 	ft_init_semaphores(&ctx);
 	ft_init_philos(&ctx);
 	ft_launch(&ctx);
-	wait_process(&ctx);
+	ft_wait_process(&ctx);
 	ft_exit(&ctx);
 	return (EXIT_SUCCESS);
 }
