@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 18:39:22 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 17:47:30 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	ft_init_semaphores(t_ctx *ctx)
 {
 	sem_unlink(SEM_WRITE);
 	sem_unlink(SEM_FORKS);
-	sem_unlink(SEM_DEAD);
+	sem_unlink(SEM_STOP);
 	ctx->write_lock = sem_open(SEM_WRITE, O_CREAT, 0644, 1);
 	ctx->forks = sem_open(SEM_FORKS, O_CREAT, 0644, ctx->nop);
-	ctx->death = sem_open(SEM_DEAD, O_CREAT, 0644, 0);
+	ctx->stop = sem_open(SEM_STOP, O_CREAT, 0644, 0);
 }
 
 void	ft_exit(t_ctx *ctx)
@@ -43,7 +43,7 @@ void	ft_exit(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->nop)
 		kill(ctx->philos[i].pid, SIGKILL);
-	sem_close(ctx->death);
+	sem_close(ctx->stop);
 	sem_close(ctx->forks);
 	sem_close(ctx->write_lock);
 	free(ctx->philos);
@@ -64,7 +64,6 @@ void	ft_launch(t_ctx *ctx)
 			ft_routine(&ctx->philos[i]);
 			exit(0);
 		}
-		usleep(100);
 	}
 }
 

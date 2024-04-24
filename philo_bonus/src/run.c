@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 18:38:32 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 17:33:08 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,10 @@ static void	*ft_monitor(void	*p)
 		if ((int)(ft_get_current_time() - philo->last_ate) > philo->ctx->ttd)
 		{
 			ft_has_died(philo);
-			sem_post(philo->ctx->death);
+			sem_post(philo->ctx->stop);
 			break ;
 		}
-		if (philo->ctx->notepme != -1)
-		{
-			if (philo->meals_eaten >= philo->ctx->notepme)
-			{
-				sem_post(philo->ctx->death);
-				break ;
-			}
-		}
+		usleep(10);
 	}
 	return (NULL);
 }
@@ -63,25 +56,34 @@ static void	ft_eating(t_philo *philo)
 	ft_forks(philo);
 	ft_is_eating(philo);
 	philo->last_ate = ft_get_current_time();
-	if (philo->ctx->notepme != -1)
-		philo->meals_eaten++;
 	ft_sleep(philo->ctx->tte, philo);
+	if (philo->meals_eaten < philo->ctx->notepme
+		&& philo->ctx->notepme > 0)
+		philo->meals_eaten++;
 	sem_post(philo->ctx->forks);
 	sem_post(philo->ctx->forks);
 }
 
 void	ft_routine(t_philo *philo)
 {
-	if (philo->id % 2)
-		ft_sleep(philo->ctx->tte / 50, philo);
 	philo->last_ate = ft_get_current_time();
 	pthread_create(&philo->monitor_thread, NULL, ft_monitor, philo);
 	pthread_detach(philo->monitor_thread);
+	if (philo->id % 2)
+		ft_sleep(philo->ctx->tte, philo);
 	while (true)
 	{
 		ft_eating(philo);
+		if (philo->meals_eaten >= philo->ctx->notepme
+			&& philo->ctx->notepme > 0)
+		{
+			sem_wait(philo->ctx->write_lock);
+			sem_post(philo->ctx->stop);
+			break ;
+		}
 		ft_is_sleeping(philo);
 		ft_sleep(philo->ctx->tts, philo);
 		ft_is_thinking(philo);
+		usleep(42);
 	}
 }

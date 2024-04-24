@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 17:28:39 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 17:39:26 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int arg_n, char **arg_a)
 	ft_init_semaphores(&ctx);
 	ft_init_philos(&ctx);
 	ft_launch(&ctx);
-	sem_wait(ctx.death);
+	sem_wait(ctx.stop);
 	ft_exit(&ctx);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 #    By: otodd <otodd@student.42london.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 17:53:24 by otodd             #+#    #+#              #
-#    Updated: 2024/04/23 17:56:36 by otodd            ###   ########.fr        #
+#    Updated: 2024/04/24 17:37:20 by otodd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CYAN		=	\033[1;36m
 NC			=	\033[0m
 
 CC 			= 	cc
-CFLAGS 		= 	-Wall -Wextra -Werror -g
+CFLAGS 		= 	-Wall -Wextra -Werror
 NAME		= 	philo_bonus
 
 SRC_DIR 	= 	src

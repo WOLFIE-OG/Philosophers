@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 17:58:27 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 16:22:22 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # define SEM_FORKS "/forks"
 # define SEM_WRITE "/write"
-# define SEM_DEAD "/dead"
+# define SEM_STOP "/stop"
 
 struct	s_ctx;
 
@@ -50,7 +50,7 @@ typedef struct s_ctx
 	int			notepme;
 	sem_t		*forks;
 	sem_t		*write_lock;
-	sem_t		*death;
+	sem_t		*stop;
 	pthread_t	death_trigger;
 }	t_ctx;
 

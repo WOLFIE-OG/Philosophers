@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 18:24:52 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/24 16:57:24 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	ft_monitor(t_ctx *ctx)
 			if (ctx->philos[i]->right_fork->is_locked)
 				ft_unlock_mutex(ctx->philos[i]->right_fork);
 		}
+		usleep(1000);
 		i = (i + 1) % ctx->nop;
 	}
 }
