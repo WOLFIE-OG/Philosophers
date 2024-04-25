@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/24 18:42:03 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/25 18:44:13 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_exit(t_ctx *ctx)
 
 	i = -1;
 	while (++i < ctx->nop)
-		kill(ctx->philos[i].pid, SIGKILL);
+		kill(ctx->philos[i].pid, 15);
 	sem_close(ctx->stop);
 	sem_close(ctx->forks);
 	sem_close(ctx->write_lock);

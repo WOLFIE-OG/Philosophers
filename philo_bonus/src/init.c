@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/24 18:41:46 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/25 18:45:37 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*ft_death_trigger(void *c)
 	ctx = (t_ctx *)c;
 	sem_wait(ctx->stop);
 	ft_exit(ctx);
-	exit(EXIT_FAILURE);
+	return (NULL);
 }
 
 int	main(int arg_n, char **arg_a)
@@ -76,6 +76,7 @@ int	main(int arg_n, char **arg_a)
 	ft_init_philos(&ctx);
 	ft_launch(&ctx);
 	ft_wait_process(&ctx);
-	ft_exit(&ctx);
+	sem_post(ctx.stop);
+	pthread_join(ctx.death_trigger, NULL);
 	return (EXIT_SUCCESS);
 }
