@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/25 18:45:37 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/26 17:27:17 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	*ft_death_trigger(void *c)
 	ctx = (t_ctx *)c;
 	sem_wait(ctx->stop);
 	ft_exit(ctx);
+	ctx->death = true;
 	return (NULL);
 }
 
@@ -72,11 +73,14 @@ int	main(int arg_n, char **arg_a)
 		printf("<time_to_sleep> [number_of_times_each_philosopher_must_eat]\n");
 		return (EXIT_FAILURE);
 	}
+	ctx.death = false;
 	ft_init_semaphores(&ctx);
 	ft_init_philos(&ctx);
 	ft_launch(&ctx);
 	ft_wait_process(&ctx);
-	sem_post(ctx.stop);
+	if (!ctx.death)
+		ft_exit(&ctx);
 	pthread_join(ctx.death_trigger, NULL);
+	free(ctx.philos);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/25 18:44:13 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/26 17:27:07 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	ft_exit(t_ctx *ctx)
 	sem_close(ctx->stop);
 	sem_close(ctx->forks);
 	sem_close(ctx->write_lock);
-	free(ctx->philos);
 }
 
 void	ft_launch(t_ctx *ctx)
