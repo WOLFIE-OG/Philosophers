@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/25 18:43:05 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/26 17:53:18 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static void	*ft_monitor(void	*p)
 		}
 		if (philo->meals_eaten >= philo->ctx->notepme
 			&& philo->ctx->notepme > 0)
+		{
+			sem_post(philo->ctx->stop);
 			break ;
+		}
 		usleep(10);
 	}
 	return (NULL);
@@ -71,23 +74,15 @@ void	ft_routine(t_philo *philo)
 {
 	philo->last_ate = ft_get_current_time();
 	pthread_create(&philo->monitor_thread, NULL, ft_monitor, philo);
+	pthread_detach(philo->monitor_thread);
 	if (philo->id % 2)
 		ft_sleep(philo->ctx->tte, philo);
 	while (true)
 	{
 		ft_eating(philo);
-		if (philo->meals_eaten >= philo->ctx->notepme
-			&& philo->ctx->notepme > 0)
-			break ;
 		ft_is_sleeping(philo);
 		ft_sleep(philo->ctx->tts, philo);
 		ft_is_thinking(philo);
 		usleep(42);
 	}
-	pthread_join(philo->monitor_thread, NULL);
-	sem_close(philo->ctx->stop);
-	sem_close(philo->ctx->forks);
-	sem_close(philo->ctx->write_lock);
-	free(philo->ctx->philos);
-	return ;
 }
