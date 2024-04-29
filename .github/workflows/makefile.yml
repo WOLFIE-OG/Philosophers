@@ -23,7 +23,7 @@ jobs:
     - name: Install norminette
       run: pip install norminette
 
-    - name: Tree
+    - name: Run tree
       run: tree
 
     - name: Run norminette
