@@ -17,14 +17,11 @@ jobs:
     - name: Update
       run: sudo apt-get update --fix-missing
     
-    - name: Get valgrind
-      run: sudo apt-get install valgrind
-
-    - name: Get norminette
-      run: pip install norminette
-
     - name: Install tree
       run: sudo apt-get install tree
+
+    - name: Install norminette
+      run: pip install norminette
 
     - name: Tree
       run: tree
