@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/29 13:39:00 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/29 14:10:14 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_philo
 	atomic_int		id;
 	atomic_int		meals_eaten;
 	atomic_bool		max_ate;
-	atomic_ulong	last_ate;
+	atomic_llong	last_ate;
 	pid_t			pid;
 	struct s_ctx	*ctx;
 	pthread_t		monitor_thread;
@@ -65,6 +65,7 @@ int				ft_ischeck_str(char *str, int (*f)(int));
 // init.c
 
 void			ft_wait_process(t_ctx *ctx);
+void			ft_close_semaphores(t_ctx *ctx);
 
 // logging.c
 

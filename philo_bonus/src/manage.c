@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/29 13:38:56 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/29 14:09:45 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ void	ft_launch(t_ctx *ctx)
 		if (ctx->philos[i].pid < 0)
 			return ;
 		if (ctx->philos[i].pid == 0)
-		{
 			ft_routine(&ctx->philos[i]);
-			exit(0);
-		}
 	}
 }
 

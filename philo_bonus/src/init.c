@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/29 13:45:26 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/29 14:28:44 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_wait_process(t_ctx *ctx)
 	}
 }
 
-static void	*death_trigger(void *c)
+static void	*ft_death_trigger(void *c)
 {
 	t_ctx	*ctx;
 
@@ -59,6 +59,16 @@ static void	*death_trigger(void *c)
 	sem_wait(ctx->stop);
 	ft_exit(ctx);
 	return (NULL);
+}
+
+void	ft_close_semaphores(t_ctx *ctx)
+{
+	sem_close(ctx->stop);
+	sem_close(ctx->forks);
+	sem_close(ctx->write_lock);
+	sem_unlink(SEM_WRITE);
+	sem_unlink(SEM_FORKS);
+	sem_unlink(SEM_STOP);
 }
 
 int	main(int arg_n, char **arg_a)
@@ -75,14 +85,12 @@ int	main(int arg_n, char **arg_a)
 	ft_init_semaphores(&ctx);
 	ft_init_philos(&ctx);
 	ft_launch(&ctx);
-	pthread_create(&ctx.death_trigger, NULL, death_trigger, &ctx);
+	pthread_create(&ctx.death_trigger, NULL, ft_death_trigger, &ctx);
 	ft_wait_process(&ctx);
 	sem_post(ctx.stop);
 	pthread_join(ctx.death_trigger, NULL);
 	ft_exit(&ctx);
-	sem_close(ctx.stop);
-	sem_close(ctx.forks);
-	sem_close(ctx.write_lock);
+	ft_close_semaphores(&ctx);
 	free(ctx.philos);
 	return (EXIT_SUCCESS);
 }

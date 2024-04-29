@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/29 13:40:30 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/29 14:31:21 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ void	ft_routine(t_philo *philo)
 		ft_is_thinking(philo);
 		usleep(100);
 	}
-	sem_close(philo->ctx->stop);
-	sem_close(philo->ctx->forks);
-	sem_close(philo->ctx->write_lock);
+	ft_close_semaphores(philo->ctx);
 	free(philo->ctx->philos);
+	exit(EXIT_SUCCESS);
 }
