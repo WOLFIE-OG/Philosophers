@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/26 17:44:32 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/29 13:45:26 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,28 @@ static bool	ft_parse_args(t_ctx *ctx, int arg_n, char **arg_a)
 	return (true);
 }
 
+void	ft_wait_process(t_ctx *ctx)
+{
+	int	i;
+
+	i = 0;
+	while (i < ctx->nop)
+	{
+		waitpid(ctx->philos[i].pid, NULL, 0);
+		i++;
+	}
+}
+
+static void	*death_trigger(void *c)
+{
+	t_ctx	*ctx;
+
+	ctx = (t_ctx *)c;
+	sem_wait(ctx->stop);
+	ft_exit(ctx);
+	return (NULL);
+}
+
 int	main(int arg_n, char **arg_a)
 {
 	t_ctx	ctx;
@@ -53,8 +75,14 @@ int	main(int arg_n, char **arg_a)
 	ft_init_semaphores(&ctx);
 	ft_init_philos(&ctx);
 	ft_launch(&ctx);
-	sem_wait(ctx.stop);
+	pthread_create(&ctx.death_trigger, NULL, death_trigger, &ctx);
+	ft_wait_process(&ctx);
+	sem_post(ctx.stop);
+	pthread_join(ctx.death_trigger, NULL);
 	ft_exit(&ctx);
+	sem_close(ctx.stop);
+	sem_close(ctx.forks);
+	sem_close(ctx.write_lock);
 	free(ctx.philos);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/26 17:49:15 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/29 13:38:56 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_init_philos(t_ctx *ctx)
 		ctx->philos[i].id = i;
 		ctx->philos[i].meals_eaten = 0;
 		ctx->philos[i].ctx = ctx;
+		ctx->philos[i].max_ate = false;
 	}
 }
 
@@ -43,9 +44,6 @@ void	ft_exit(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->nop)
 		kill(ctx->philos[i].pid, SIGKILL);
-	sem_close(ctx->stop);
-	sem_close(ctx->forks);
-	sem_close(ctx->write_lock);
 }
 
 void	ft_launch(t_ctx *ctx)

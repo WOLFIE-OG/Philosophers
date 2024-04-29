@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/29 13:11:17 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/29 13:40:30 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	*ft_monitor(void	*p)
 		if (philo->meals_eaten >= philo->ctx->notepme
 			&& philo->ctx->notepme > 0)
 		{
-			sem_post(philo->ctx->stop);
+			philo->max_ate = true;
 			break ;
 		}
 		usleep(100);
@@ -79,10 +79,16 @@ void	ft_routine(t_philo *philo)
 		ft_sleep(100);
 	while (true)
 	{
+		if (philo->max_ate)
+			break ;
 		ft_eating(philo);
 		ft_is_sleeping(philo);
 		ft_sleep(philo->ctx->tts);
 		ft_is_thinking(philo);
 		usleep(100);
 	}
+	sem_close(philo->ctx->stop);
+	sem_close(philo->ctx->forks);
+	sem_close(philo->ctx->write_lock);
+	free(philo->ctx->philos);
 }
