@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/24 16:57:24 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/29 13:01:22 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ft_sleep(unsigned long time, t_philo *philo)
 	{
 		if ((ft_get_current_time() - then) >= time)
 			break ;
-		usleep(philo->ctx->nop * 2);
+		usleep(100);
 	}
 }
 
@@ -46,7 +46,7 @@ void	ft_monitor(t_ctx *ctx)
 			if (ctx->philos[i]->right_fork->is_locked)
 				ft_unlock_mutex(ctx->philos[i]->right_fork);
 		}
-		usleep(1000);
+		usleep(100);
 		i = (i + 1) % ctx->nop;
 	}
 }
@@ -90,9 +90,9 @@ void	*ft_routine(void *p)
 	philo = (t_philo *)p;
 	philo->is_ready = true;
 	while (ft_get_total_philo_ready_count(philo->ctx) != philo->ctx->nop)
-		usleep(10);
+		usleep(100);
 	if (philo->id % 2)
-		ft_sleep(philo->ctx->tte / 50, philo);
+		ft_sleep(100, philo);
 	while (!philo->ctx->stop && !philo->is_dead)
 	{
 		ft_eating(philo);

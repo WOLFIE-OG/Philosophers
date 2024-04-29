@@ -6,13 +6,13 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/26 17:53:18 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/29 13:11:17 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo_bonus.h"
 
-static void	ft_sleep(unsigned long time, t_philo *philo)
+static void	ft_sleep(unsigned long time)
 {
 	unsigned long	then;
 
@@ -21,7 +21,7 @@ static void	ft_sleep(unsigned long time, t_philo *philo)
 	{
 		if ((ft_get_current_time() - then) >= time)
 			break ;
-		usleep(philo->ctx->nop * 2);
+		usleep(100);
 	}
 }
 
@@ -44,7 +44,7 @@ static void	*ft_monitor(void	*p)
 			sem_post(philo->ctx->stop);
 			break ;
 		}
-		usleep(10);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -62,7 +62,7 @@ static void	ft_eating(t_philo *philo)
 	ft_forks(philo);
 	ft_is_eating(philo);
 	philo->last_ate = ft_get_current_time();
-	ft_sleep(philo->ctx->tte, philo);
+	ft_sleep(philo->ctx->tte);
 	if (philo->meals_eaten < philo->ctx->notepme
 		&& philo->ctx->notepme > 0)
 		philo->meals_eaten++;
@@ -76,13 +76,13 @@ void	ft_routine(t_philo *philo)
 	pthread_create(&philo->monitor_thread, NULL, ft_monitor, philo);
 	pthread_detach(philo->monitor_thread);
 	if (philo->id % 2)
-		ft_sleep(philo->ctx->tte, philo);
+		ft_sleep(100);
 	while (true)
 	{
 		ft_eating(philo);
 		ft_is_sleeping(philo);
-		ft_sleep(philo->ctx->tts, philo);
+		ft_sleep(philo->ctx->tts);
 		ft_is_thinking(philo);
-		usleep(42);
+		usleep(100);
 	}
 }
