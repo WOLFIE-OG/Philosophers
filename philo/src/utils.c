@@ -6,13 +6,13 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:25:00 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 18:05:00 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/30 17:52:40 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	ft_get_current_total_eaten_meals(t_ctx *ctx)
+int	ft_get_total_eaten_meals(t_ctx *ctx)
 {
 	int	i;
 	int	count;

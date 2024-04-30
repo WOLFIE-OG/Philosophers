@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/29 13:01:22 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/30 17:58:09 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ void	ft_monitor(t_ctx *ctx)
 	i = 0;
 	while (!ctx->stop)
 	{
-		if (ctx->notepme != -1)
-			if (ft_get_current_total_eaten_meals(ctx)
-				>= ctx->notepme * ctx->nop)
-				ctx->stop = true;
+		if ((ft_get_total_eaten_meals(ctx) >= ctx->notepme * ctx->nop)
+			&& ctx->notepme != -1)
+			ctx->stop = true;
 		if ((int)(ft_get_current_time() - ctx->philos[i]->last_ate) > ctx->ttd)
 		{
 			ft_has_died(ctx->philos[i]);
@@ -96,8 +95,12 @@ void	*ft_routine(void *p)
 	while (!philo->ctx->stop && !philo->is_dead)
 	{
 		ft_eating(philo);
+		if (philo->ctx->stop)
+			break ;
 		ft_is_sleeping(philo);
 		ft_sleep(philo->ctx->tts, philo);
+		if (philo->ctx->stop)
+			break ;
 		ft_is_thinking(philo);
 	}
 	philo->is_finished = true;

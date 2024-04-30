@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 18:04:55 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/30 17:52:36 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void			*ft_routine(void *p);
 
 // utils.c
 
-int				ft_get_current_total_eaten_meals(t_ctx *ctx);
+int				ft_get_total_eaten_meals(t_ctx *ctx);
 int				ft_get_total_philo_ready_count(t_ctx *ctx);
 bool			ft_are_philos_finished(t_ctx *ctx);
 void			ft_lock_mutex(t_mutex *mutex);

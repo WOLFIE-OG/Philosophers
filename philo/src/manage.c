@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:43:45 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 18:03:47 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/30 18:22:26 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	ft_exit(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->nop)
 		pthread_join(ctx->philos[i]->thread, NULL);
+	pthread_mutex_destroy(&ctx->write_lock->mutex);
 	i = -1;
 	while (++i < ctx->nop)
 	{
@@ -64,7 +65,7 @@ void	ft_exit(t_ctx *ctx)
 	}
 	free(ctx->philos);
 	free(ctx->forks);
-	pthread_mutex_destroy(&ctx->write_lock->mutex);
+
 	free(ctx->write_lock);
 }
 
