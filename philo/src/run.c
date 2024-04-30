@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/30 17:58:09 by otodd            ###   ########.fr       */
+/*   Updated: 2024/04/30 18:32:29 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	ft_monitor(t_ctx *ctx)
 			ft_has_died(ctx->philos[i]);
 			ctx->stop = true;
 			ctx->philos[i]->is_dead = true;
-			if (ctx->philos[i]->left_fork->is_locked)
-				ft_unlock_mutex(ctx->philos[i]->left_fork);
-			if (ctx->philos[i]->right_fork->is_locked)
-				ft_unlock_mutex(ctx->philos[i]->right_fork);
+			// if (ctx->philos[i]->left_fork->is_locked)
+			// 	ft_unlock_mutex(ctx->philos[i]->left_fork);
+			// if (ctx->philos[i]->right_fork->is_locked)
+			// 	ft_unlock_mutex(ctx->philos[i]->right_fork);
 		}
 		usleep(100);
 		i = (i + 1) % ctx->nop;
