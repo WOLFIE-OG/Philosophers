@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/29 14:09:45 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 13:37:32 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_init_philos(t_ctx *ctx)
 		ctx->philos[i].meals_eaten = 0;
 		ctx->philos[i].ctx = ctx;
 		ctx->philos[i].max_ate = false;
+		ctx->philos[i].last_ate = 0;
 	}
 }
 
@@ -50,6 +51,7 @@ void	ft_launch(t_ctx *ctx)
 {
 	int	i;
 
+	ctx->start_time = ft_get_current_time();
 	i = -1;
 	while (++i < ctx->nop)
 	{
@@ -61,10 +63,10 @@ void	ft_launch(t_ctx *ctx)
 	}
 }
 
-unsigned long	ft_get_current_time(void)
+long	ft_get_current_time(void)
 {
 	struct timeval	t;
 
 	gettimeofday(&t, NULL);
-	return ((t.tv_sec * (unsigned long)1000) + (t.tv_usec / 1000));
+	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }

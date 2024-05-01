@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:43:45 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/01 11:48:24 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 13:10:40 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	ft_init_philos(t_ctx *ctx)
 		ctx->philos[i] = malloc(sizeof(t_philo));
 		ctx->philos[i]->id = i;
 		ctx->philos[i]->meals_eaten = 0;
+		ctx->philos[i]->last_ate = 0;
 		ctx->philos[i]->ctx = ctx;
-		ctx->philos[i]->is_ready = false;
 		ctx->philos[i]->is_dead = false;
 		ctx->philos[i]->is_finished = false;
 		ctx->philos[i]->left_fork = &ctx->forks[i];
@@ -67,6 +67,7 @@ void	ft_create_threads(t_ctx *ctx)
 {
 	int	i;
 
+	ctx->start_time = ft_get_current_time();
 	i = -1;
 	while (++i < ctx->nop)
 	{
@@ -74,12 +75,4 @@ void	ft_create_threads(t_ctx *ctx)
 			NULL, ft_routine, ctx->philos[i]);
 		ctx->philos[i]->last_ate = ft_get_current_time();
 	}
-}
-
-unsigned long	ft_get_current_time(void)
-{
-	struct timeval	t;
-
-	gettimeofday(&t, NULL);
-	return ((t.tv_sec * (unsigned long)1000) + (t.tv_usec / 1000));
 }

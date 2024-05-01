@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/01 11:47:18 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 13:10:31 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ typedef struct s_philo
 {
 	atomic_int		id;
 	atomic_int		meals_eaten;
-	atomic_ulong	last_ate;
+	atomic_long		last_ate;
 	pthread_t		thread;
 	struct s_ctx	*ctx;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	atomic_bool		is_ready;
 	atomic_bool		is_finished;
 	atomic_bool		is_dead;
 }	t_philo;
@@ -46,6 +45,7 @@ typedef struct s_ctx
 	int				tte;
 	int				tts;
 	int				notepme;
+	atomic_long		start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	write_lock;
 }	t_ctx;
@@ -70,7 +70,6 @@ void			ft_init_philos(t_ctx *ctx);
 void			ft_init_mutexes(t_ctx *ctx);
 void			ft_exit(t_ctx *ctx);
 void			ft_create_threads(t_ctx *ctx);
-unsigned long	ft_get_current_time(void);
 
 // run.c
 
@@ -80,7 +79,7 @@ void			*ft_routine(void *p);
 // utils.c
 
 int				ft_get_total_eaten_meals(t_ctx *ctx);
-int				ft_get_total_philo_ready_count(t_ctx *ctx);
 bool			ft_are_philos_finished(t_ctx *ctx);
+long			ft_get_current_time(void);
 
 #endif
