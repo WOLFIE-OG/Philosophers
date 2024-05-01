@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:21:18 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/29 14:20:26 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 17:24:02 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	ft_taken_fork(t_philo *philo)
 		return ;
 	sem_wait(philo->ctx->write_lock);
 	printf(
-		BBLU"%ld"RESET" %d has taken a fork\n",
-		ft_get_current_time(),
+		BBLU"%09ld"RESET" %d has taken a fork\n",
+		ft_get_current_time() - philo->ctx->start_time,
 		philo->id + 1
 		);
 	sem_post(philo->ctx->write_lock);
@@ -31,8 +31,8 @@ void	ft_is_eating(t_philo *philo)
 		return ;
 	sem_wait(philo->ctx->write_lock);
 	printf(
-		BCYN"%ld"RESET" %d is eating\n",
-		ft_get_current_time(),
+		BCYN"%09ld"RESET" %d is eating\n",
+		ft_get_current_time() - philo->ctx->start_time,
 		philo->id + 1
 		);
 	sem_post(philo->ctx->write_lock);
@@ -44,8 +44,8 @@ void	ft_is_sleeping(t_philo *philo)
 		return ;
 	sem_wait(philo->ctx->write_lock);
 	printf(
-		BHMAG"%ld"RESET" %d is sleeping\n",
-		ft_get_current_time(),
+		BHMAG"%09ld"RESET" %d is sleeping\n",
+		ft_get_current_time() - philo->ctx->start_time,
 		philo->id + 1
 		);
 	sem_post(philo->ctx->write_lock);
@@ -57,8 +57,8 @@ void	ft_is_thinking(t_philo *philo)
 		return ;
 	sem_wait(philo->ctx->write_lock);
 	printf(
-		BYEL"%ld"RESET" %d is thinking\n",
-		ft_get_current_time(),
+		BYEL"%09ld"RESET" %d is thinking\n",
+		ft_get_current_time() - philo->ctx->start_time,
 		philo->id + 1
 		);
 	sem_post(philo->ctx->write_lock);
@@ -68,8 +68,8 @@ void	ft_has_died(t_philo *philo)
 {
 	sem_wait(philo->ctx->write_lock);
 	printf(
-		BRED"%ld"RESET" %d has died\n",
-		ft_get_current_time(),
+		BRED"%09ld"RESET" %d has died\n",
+		ft_get_current_time() - philo->ctx->start_time,
 		philo->id + 1
 		);
 }

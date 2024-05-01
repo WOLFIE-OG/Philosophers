@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:25:00 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/01 13:10:22 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 17:18:57 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,13 @@ long	ft_get_current_time(void)
 
 	gettimeofday(&t, NULL);
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
+}
+
+void	ft_sleep(long time)
+{
+	long	then;
+
+	then = ft_get_current_time();
+	while ((ft_get_current_time() - then) < time)
+		usleep(100);
 }

@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:43:45 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/01 13:10:40 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 17:19:45 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	ft_init_philos(t_ctx *ctx)
 		ctx->philos[i]->meals_eaten = 0;
 		ctx->philos[i]->last_ate = 0;
 		ctx->philos[i]->ctx = ctx;
-		ctx->philos[i]->is_dead = false;
 		ctx->philos[i]->is_finished = false;
 		ctx->philos[i]->left_fork = &ctx->forks[i];
 		ctx->philos[i]->right_fork = &ctx->forks[(i + 1) % ctx->nop];
@@ -48,7 +47,7 @@ void	ft_exit(t_ctx *ctx)
 	int	i;
 
 	while (!ft_are_philos_finished(ctx))
-		usleep(100);
+		ft_sleep(100);
 	i = -1;
 	while (++i < ctx->nop)
 		pthread_join(ctx->philos[i]->thread, NULL);

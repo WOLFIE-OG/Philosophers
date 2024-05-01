@@ -6,20 +6,11 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/01 13:11:49 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 17:26:30 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
-static void	ft_sleep(long time)
-{
-	long	then;
-
-	then = ft_get_current_time();
-	while ((ft_get_current_time() - then) < time)
-		usleep(100);
-}
 
 void	ft_monitor(t_ctx *ctx)
 {
@@ -34,12 +25,12 @@ void	ft_monitor(t_ctx *ctx)
 		if (((ft_get_current_time() - ctx->start_time)
 				- ctx->philos[i]->last_ate) > ctx->ttd)
 		{
+			pthread_mutex_unlock(&ctx->write_lock);
 			ft_has_died(ctx->philos[i]);
-			ctx->philos[i]->is_dead = true;
 			ctx->stop = true;
 		}
 		i = (i + 1) % ctx->nop;
-		usleep(10);
+		ft_sleep(1);
 	}
 }
 
@@ -68,9 +59,9 @@ static void	ft_eating(t_philo *philo)
 	ft_take_forks(philo);
 	ft_is_eating(philo);
 	philo->last_ate = ft_get_current_time() - philo->ctx->start_time;
+	ft_sleep(philo->ctx->tte);
 	if (philo->ctx->notepme != -1)
 		philo->meals_eaten++;
-	ft_sleep(philo->ctx->tte);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 }
@@ -81,8 +72,8 @@ void	*ft_routine(void *p)
 
 	philo = (t_philo *)p;
 	if (philo->id % 2)
-		ft_sleep(10);
-	while (!philo->is_dead)
+		ft_sleep(100);
+	while (!philo->ctx->stop)
 	{
 		ft_eating(philo);
 		if (philo->ctx->stop)
