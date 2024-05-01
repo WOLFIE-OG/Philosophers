@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/01 13:37:03 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 16:15:03 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ft_sleep(long time)
 		usleep(100);
 }
 
-static void	*ft_monitor(void	*p)
+static void	*ft_monitor(void *p)
 {
 	t_philo	*philo;
 
