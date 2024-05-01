@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/30 18:32:29 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 11:59:47 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,6 @@ void	ft_monitor(t_ctx *ctx)
 			ft_has_died(ctx->philos[i]);
 			ctx->stop = true;
 			ctx->philos[i]->is_dead = true;
-			// if (ctx->philos[i]->left_fork->is_locked)
-			// 	ft_unlock_mutex(ctx->philos[i]->left_fork);
-			// if (ctx->philos[i]->right_fork->is_locked)
-			// 	ft_unlock_mutex(ctx->philos[i]->right_fork);
 		}
 		usleep(100);
 		i = (i + 1) % ctx->nop;
@@ -52,18 +48,18 @@ void	ft_monitor(t_ctx *ctx)
 
 static void	ft_take_forks(t_philo *philo)
 {
-	if (&philo->left_fork->mutex < &philo->right_fork->mutex)
+	if (philo->left_fork < philo->right_fork)
 	{
-		ft_lock_mutex(philo->left_fork);
+		pthread_mutex_lock(philo->left_fork);
 		ft_taken_fork(philo);
-		ft_lock_mutex(philo->right_fork);
+		pthread_mutex_lock(philo->right_fork);
 		ft_taken_fork(philo);
 	}
 	else
 	{
-		ft_lock_mutex(philo->right_fork);
+		pthread_mutex_lock(philo->right_fork);
 		ft_taken_fork(philo);
-		ft_lock_mutex(philo->left_fork);
+		pthread_mutex_lock(philo->left_fork);
 		ft_taken_fork(philo);
 	}
 }
@@ -78,8 +74,8 @@ static void	ft_eating(t_philo *philo)
 	if (philo->ctx->notepme != -1)
 		philo->meals_eaten++;
 	ft_sleep(philo->ctx->tte, philo);
-	ft_unlock_mutex(philo->left_fork);
-	ft_unlock_mutex(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
 }
 
 void	*ft_routine(void *p)

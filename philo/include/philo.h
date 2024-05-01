@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/30 17:52:36 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 11:47:18 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@
 
 struct	s_ctx;
 
-typedef struct s_mutex
-{
-	pthread_mutex_t	mutex;
-	atomic_bool		is_locked;
-}	t_mutex;
-
 typedef struct s_philo
 {
 	atomic_int		id;
@@ -36,8 +30,8 @@ typedef struct s_philo
 	atomic_ulong	last_ate;
 	pthread_t		thread;
 	struct s_ctx	*ctx;
-	t_mutex			*left_fork;
-	t_mutex			*right_fork;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
 	atomic_bool		is_ready;
 	atomic_bool		is_finished;
 	atomic_bool		is_dead;
@@ -52,8 +46,8 @@ typedef struct s_ctx
 	int				tte;
 	int				tts;
 	int				notepme;
-	t_mutex			*forks;
-	t_mutex			*write_lock;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	write_lock;
 }	t_ctx;
 
 // ft_utils.c
@@ -88,7 +82,5 @@ void			*ft_routine(void *p);
 int				ft_get_total_eaten_meals(t_ctx *ctx);
 int				ft_get_total_philo_ready_count(t_ctx *ctx);
 bool			ft_are_philos_finished(t_ctx *ctx);
-void			ft_lock_mutex(t_mutex *mutex);
-void			ft_unlock_mutex(t_mutex *mutex);
 
 #endif

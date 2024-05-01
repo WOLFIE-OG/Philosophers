@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:43:45 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/30 18:22:26 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 11:48:24 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,10 @@ void	ft_init_mutexes(t_ctx *ctx)
 	int	i;
 
 	i = -1;
-	ctx->write_lock = malloc(sizeof(t_mutex));
-	pthread_mutex_init(&ctx->write_lock->mutex, NULL);
-	ctx->forks = malloc(sizeof(t_mutex) * ctx->nop);
+	pthread_mutex_init(&ctx->write_lock, NULL);
+	ctx->forks = malloc(sizeof(pthread_mutex_t) * ctx->nop);
 	while (++i < ctx->nop)
-	{
-		pthread_mutex_init(&ctx->forks[i].mutex, NULL);
-		ctx->forks[i].is_locked = false;
-	}
+		pthread_mutex_init(&ctx->forks[i], NULL);
 }
 
 void	ft_exit(t_ctx *ctx)
@@ -56,17 +52,15 @@ void	ft_exit(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->nop)
 		pthread_join(ctx->philos[i]->thread, NULL);
-	pthread_mutex_destroy(&ctx->write_lock->mutex);
+	pthread_mutex_destroy(&ctx->write_lock);
 	i = -1;
 	while (++i < ctx->nop)
 	{
-		pthread_mutex_destroy(&ctx->forks[i].mutex);
+		pthread_mutex_destroy(&ctx->forks[i]);
 		free(ctx->philos[i]);
 	}
 	free(ctx->philos);
 	free(ctx->forks);
-
-	free(ctx->write_lock);
 }
 
 void	ft_create_threads(t_ctx *ctx)

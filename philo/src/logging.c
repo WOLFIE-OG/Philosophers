@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:21:18 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/30 18:34:35 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 11:49:16 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_taken_fork(t_philo *philo)
 {
 	if (!philo->ctx->stop)
 	{
-		ft_lock_mutex(philo->ctx->write_lock);
+		pthread_mutex_lock(&philo->ctx->write_lock);
 		if (!philo->ctx->stop)
 		{
 			printf(
@@ -25,7 +25,7 @@ void	ft_taken_fork(t_philo *philo)
 				philo->id + 1
 				);
 		}
-		ft_unlock_mutex(philo->ctx->write_lock);
+		pthread_mutex_unlock(&philo->ctx->write_lock);
 	}
 }
 
@@ -33,7 +33,7 @@ void	ft_is_eating(t_philo *philo)
 {
 	if (!philo->ctx->stop)
 	{
-		ft_lock_mutex(philo->ctx->write_lock);
+		pthread_mutex_lock(&philo->ctx->write_lock);
 		if (!philo->ctx->stop)
 		{
 			printf(
@@ -42,7 +42,7 @@ void	ft_is_eating(t_philo *philo)
 				philo->id + 1
 				);
 		}
-		ft_unlock_mutex(philo->ctx->write_lock);
+		pthread_mutex_unlock(&philo->ctx->write_lock);
 	}
 }
 
@@ -50,7 +50,7 @@ void	ft_is_sleeping(t_philo *philo)
 {
 	if (!philo->ctx->stop)
 	{
-		ft_lock_mutex(philo->ctx->write_lock);
+		pthread_mutex_lock(&philo->ctx->write_lock);
 		if (!philo->ctx->stop)
 		{
 			printf(
@@ -59,7 +59,7 @@ void	ft_is_sleeping(t_philo *philo)
 				philo->id + 1
 				);
 		}
-		ft_unlock_mutex(philo->ctx->write_lock);
+		pthread_mutex_unlock(&philo->ctx->write_lock);
 	}
 }
 
@@ -67,7 +67,7 @@ void	ft_is_thinking(t_philo *philo)
 {
 	if (!philo->ctx->stop)
 	{
-		ft_lock_mutex(philo->ctx->write_lock);
+		pthread_mutex_lock(&philo->ctx->write_lock);
 		if (!philo->ctx->stop)
 		{
 			printf(
@@ -76,7 +76,7 @@ void	ft_is_thinking(t_philo *philo)
 				philo->id + 1
 				);
 		}
-		ft_unlock_mutex(philo->ctx->write_lock);
+		pthread_mutex_unlock(&philo->ctx->write_lock);
 	}
 }
 
@@ -84,7 +84,7 @@ void	ft_has_died(t_philo *philo)
 {
 	if (!philo->ctx->stop)
 	{
-		ft_lock_mutex(philo->ctx->write_lock);
+		pthread_mutex_lock(&philo->ctx->write_lock);
 		if (!philo->ctx->stop)
 		{
 			printf(
@@ -93,6 +93,6 @@ void	ft_has_died(t_philo *philo)
 				philo->id + 1
 				);
 		}
-		ft_unlock_mutex(philo->ctx->write_lock);
+		pthread_mutex_unlock(&philo->ctx->write_lock);
 	}
 }

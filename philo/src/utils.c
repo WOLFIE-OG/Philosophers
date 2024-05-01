@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:25:00 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/30 17:52:40 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/01 11:47:22 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,4 @@ bool	ft_are_philos_finished(t_ctx *ctx)
 		return (true);
 	else
 		return (false);
-}
-
-void	ft_lock_mutex(t_mutex *mutex)
-{
-	pthread_mutex_lock(&mutex->mutex);
-	mutex->is_locked = true;
-}
-
-void	ft_unlock_mutex(t_mutex *mutex)
-{
-	pthread_mutex_unlock(&mutex->mutex);
-	mutex->is_locked = false;
 }
