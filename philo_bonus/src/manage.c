@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:39:26 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/08 15:01:17 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/08 15:04:04 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	ft_init_semaphores(t_ctx *ctx)
 	ctx->write_lock = sem_open(SEM_WRITE, O_CREAT, 0644, 1);
 	ctx->forks = sem_open(SEM_FORKS, O_CREAT, 0644, ctx->nop);
 	ctx->stop = sem_open(SEM_STOP, O_CREAT, 0644, 0);
-	sem_post(ctx->stop);
-	sem_wait(ctx->stop);
 }
 
 void	ft_exit(t_ctx *ctx)
