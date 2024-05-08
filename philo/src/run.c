@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/08 12:57:40 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/08 15:01:31 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ static bool	ft_eating(t_philo *philo)
 	philo->last_ate = ft_get_current_time() - philo->ctx->start_time;
 	ft_sleep(philo->ctx->tte);
 	if (philo->ctx->notepme != -1)
+	{
+		if (philo->meals_eaten == philo->ctx->notepme)
+			return (false);
 		philo->meals_eaten++;
+	}
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	return (true);
