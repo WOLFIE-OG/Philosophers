@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:43:45 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/01 17:19:45 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/08 12:51:04 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,5 @@ void	ft_create_threads(t_ctx *ctx)
 	{
 		pthread_create(&ctx->philos[i]->thread,
 			NULL, ft_routine, ctx->philos[i]);
-		ctx->philos[i]->last_ate = ft_get_current_time();
 	}
 }

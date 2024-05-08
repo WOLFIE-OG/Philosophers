@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: otodd <otodd@student.42london.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/13 17:53:24 by otodd             #+#    #+#              #
-#    Updated: 2024/05/01 12:21:36 by otodd            ###   ########.fr        #
+#    Created: 2024/05/08 13:30:59 by otodd             #+#    #+#              #
+#    Updated: 2024/05/08 13:37:25 by otodd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,13 @@ GREEN		=	\033[1;32m
 BLUE		=	\033[1;34m
 CYAN		=	\033[1;36m
 NC			=	\033[0m
+ERASE		=	\033[2K\r
 
 CC 			= 	cc
-CFLAGS 		= 	-Wall -Wextra -Werror
+CFLAGS 		= 	-Wall -Wextra -Werror -g
 NAME		= 	philo_bonus
+COUNTER 	= 	0
+PRETTY 		= 	true
 
 SRC_DIR 	= 	src
 OBJ_DIR 	= 	obj
@@ -39,26 +42,47 @@ all: $(NAME)
 
 dir:
 	@if [ ! -d "obj" ]; then \
-		echo "[$(GREEN)PHILO$(NC)]	    Creating obj directory..."; \
 		mkdir -p obj; \
+		if [ "$(PRETTY)" = "true" ]; then \
+			printf "$(ERASE)[$(GREEN)PHILO$(NC)]	    Creating obj directory..."; \
+		else \
+			echo "[$(GREEN)PHILO$(NC)]	    Creating obj directory..."; \
+		fi \
 	fi
 
 $(NAME): $(OBJS)
-	@echo "[$(BLUE)PHILO$(NC)]	    Building standard $@..."
-	@$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBS) -o $@
+	@if [ "$(PRETTY)" = "true" ]; then \
+		printf "$(ERASE)[$(BLUE)PHILO$(NC)]	    Building $@... ($(COUNTER) sources compiled)\n"; \
+	else \
+		echo "[$(BLUE)PHILO$(NC)]	    Building $@..."; \
+	fi
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/philo_bonus.h | dir
-	@echo "[$(CYAN)PHILO$(NC)]	    Compiling $< --> $@"
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
-
+	@if [ "$(PRETTY)" = "true" ]; then \
+		printf "$(ERASE)[$(CYAN)PHILO$(NC)]	    Compiling $< --> $@"; \
+		$(eval COUNTER = $(shell echo $$(($(COUNTER) + 1)))) \
+	else \
+		echo "[$(CYAN)PHILO$(NC)]	    Compiling $< --> $@"; \
+	fi
 
 clean:
-	@echo "[$(YELLOW)PHILO$(NC)]	    Cleaning object directory..."
 	@rm -rf $(OBJ_DIR)
+	@if [ "$(PRETTY)" = "true" ]; then \
+		printf "$(ERASE)[$(YELLOW)PHILO$(NC)]	    Cleaning object directory..."; \
+	else \
+		echo "[$(YELLOW)PHILO$(NC)]	    Cleaning object directory..."; \
+	fi
+	
 
 fclean: clean
-	@echo "[$(RED)PHILO$(NC)]	    Cleaning executable directory..."
 	@rm -rf $(NAME)
+	@if [ "$(PRETTY)" = "true" ]; then \
+		printf "$(ERASE)[$(RED)PHILO$(NC)]	    Cleaning executable directory..."; \
+	else \
+		echo "[$(RED)PHILO$(NC)]	    Cleaning executable directory..."; \
+	fi
 
 re: fclean all
 
