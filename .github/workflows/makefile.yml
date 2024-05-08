@@ -30,10 +30,10 @@ jobs:
       run: norminette philo philo_bonus
   
     - name: Make program
-      run: make
+      run: make PRETTY=false
 
     - name: Re-make program
-      run: make re
+      run: make re PRETTY=false
     
     - name: Run standard
       run: ./philo/philo 5 800 200 200 20
