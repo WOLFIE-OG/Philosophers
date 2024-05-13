@@ -30,10 +30,10 @@ jobs:
       run: norminette philo philo_bonus
   
     - name: Make program
-      run: make
+      run: make PRETTY=false
 
     - name: Re-make program
-      run: make re
+      run: make re PRETTY=false
     
     - name: Run standard
       run: ./philo/philo 5 800 200 200 20
@@ -64,3 +64,12 @@ jobs:
 
     - name: Run bonus with helgrind
       run: valgrind --tool=helgrind -s ./philo_bonus/philo_bonus 10 8000000 200 200 20
+    
+    - name: Clone tester
+      run: git clone https://github.com/WOLFIE-OG/LazyPhilosophersTesterGithubActions
+    
+    - name: Test standard
+      run: cd LazyPhilosophersTesterGithubActions && ./test.sh ../philo/philo
+    
+    - name: Test bonus
+      run: cd LazyPhilosophersTesterGithubActions && ./test.sh ../philo_bonus/philo_bonus
