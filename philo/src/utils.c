@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:25:00 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/13 13:11:35 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/13 15:57:32 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	ft_are_philos_full(t_ctx *ctx)
 	i = -1;
 	count = 0;
 	while (++i < ctx->nop)
-		if (ctx->philos[i]->is_full)
+		if (ctx->philos[i].is_full)
 			count++;
 	if (count == ctx->nop)
 		return (true);

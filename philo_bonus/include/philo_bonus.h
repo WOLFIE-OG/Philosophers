@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/01 13:39:34 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/13 16:04:55 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ struct	s_ctx;
 
 typedef struct s_philo
 {
-	atomic_int		id;
+	int				id;
 	atomic_int		meals_eaten;
 	atomic_bool		max_ate;
 	atomic_long		last_ate;
@@ -53,7 +53,7 @@ typedef struct s_ctx
 	sem_t		*forks;
 	sem_t		*write_lock;
 	sem_t		*stop;
-	atomic_long	start_time;
+	long		start_time;
 	pthread_t	death_trigger;
 }	t_ctx;
 

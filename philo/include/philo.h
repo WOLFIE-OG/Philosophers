@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/09 17:04:34 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/13 15:56:04 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ struct	s_ctx;
 
 typedef struct s_philo
 {
-	atomic_int		id;
+	int				id;
 	atomic_int		meals_eaten;
 	atomic_long		last_ate;
 	pthread_t		thread;
@@ -38,13 +38,13 @@ typedef struct s_philo
 typedef struct s_ctx
 {
 	atomic_bool		stop;
-	t_philo			**philos;
+	t_philo			*philos;
 	int				nop;
 	int				ttd;
 	int				tte;
 	int				tts;
 	int				notepme;
-	atomic_long		start_time;
+	long			start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	write_lock;
 }	t_ctx;

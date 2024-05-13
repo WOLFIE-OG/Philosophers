@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:43:45 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/09 17:04:38 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/13 15:57:07 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@ void	ft_init_philos(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->nop)
 	{
-		ctx->philos[i] = malloc(sizeof(t_philo));
-		ctx->philos[i]->id = i;
-		ctx->philos[i]->meals_eaten = 0;
-		ctx->philos[i]->last_ate = 0;
-		ctx->philos[i]->ctx = ctx;
-		ctx->philos[i]->is_full = false;
-		ctx->philos[i]->left_fork = &ctx->forks[i];
-		ctx->philos[i]->right_fork = &ctx->forks[(i + 1) % ctx->nop];
+		ctx->philos[i].id = i;
+		ctx->philos[i].meals_eaten = 0;
+		ctx->philos[i].last_ate = 0;
+		ctx->philos[i].ctx = ctx;
+		ctx->philos[i].is_full = false;
+		ctx->philos[i].left_fork = &ctx->forks[i];
+		ctx->philos[i].right_fork = &ctx->forks[(i + 1) % ctx->nop];
 	}
 }
 
@@ -48,14 +47,11 @@ void	ft_exit(t_ctx *ctx)
 
 	i = -1;
 	while (++i < ctx->nop)
-		pthread_join(ctx->philos[i]->thread, NULL);
+		pthread_join(ctx->philos[i].thread, NULL);
 	pthread_mutex_destroy(&ctx->write_lock);
 	i = -1;
 	while (++i < ctx->nop)
-	{
 		pthread_mutex_destroy(&ctx->forks[i]);
-		free(ctx->philos[i]);
-	}
 	free(ctx->philos);
 	free(ctx->forks);
 }
@@ -68,7 +64,7 @@ void	ft_create_threads(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->nop)
 	{
-		pthread_create(&ctx->philos[i]->thread,
-			NULL, ft_routine, ctx->philos[i]);
+		pthread_create(&ctx->philos[i].thread,
+			NULL, ft_routine, &ctx->philos[i]);
 	}
 }
