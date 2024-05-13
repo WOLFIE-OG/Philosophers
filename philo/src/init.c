@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:06:41 by otodd             #+#    #+#             */
-/*   Updated: 2024/04/23 18:03:41 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/13 13:21:49 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 static bool	ft_parse_args(t_ctx *ctx, int arg_n, char **arg_a)
 {
-	if (arg_n == 1 || arg_n > 6)
+	if (arg_n < 1 && arg_n > 6)
 		return (false);
 	if (!ft_ischeck_str(arg_a[1], ft_isdigit))
 		return (false);
 	ctx->nop = ft_atoi(arg_a[1]);
+	if (!ctx->nop)
+		return (false);
 	if (!ft_ischeck_str(arg_a[2], ft_isdigit))
 		return (false);
 	ctx->ttd = ft_atoi(arg_a[2]);

@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/08 12:57:40 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/13 13:13:51 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,19 @@ void	ft_monitor(t_ctx *ctx)
 	i = 0;
 	while (!ctx->stop)
 	{
-		if ((ft_get_total_eaten_meals(ctx) >= ctx->notepme * ctx->nop)
-			&& ctx->notepme != -1)
+		if (ft_are_philos_full(ctx))
 			ctx->stop = true;
-		if (((ft_get_current_time() - ctx->start_time)
-				- ctx->philos[i]->last_ate) > ctx->ttd)
+		if (!ctx->philos[i]->is_full)
 		{
-			ft_has_died(ctx->philos[i]);
-			ctx->stop = true;
+			if (((ft_get_current_time() - ctx->start_time)
+					- ctx->philos[i]->last_ate) > ctx->ttd)
+			{
+				if (!ctx->philos[i]->is_full)
+				{
+					ft_has_died(ctx->philos[i]);
+					ctx->stop = true;
+				}
+			}
 		}
 		i = (i + 1) % ctx->nop;
 		ft_sleep(1);
@@ -60,11 +65,18 @@ static bool	ft_eating(t_philo *philo)
 {
 	if (!ft_take_forks(philo))
 		return (false);
+	if (philo->ctx->notepme != -1)
+	{
+		if (philo->meals_eaten == philo->ctx->notepme)
+		{
+			philo->is_full = true;
+			return (false);
+		}
+	}
 	ft_is_eating(philo);
 	philo->last_ate = ft_get_current_time() - philo->ctx->start_time;
+	philo->meals_eaten++;
 	ft_sleep(philo->ctx->tte);
-	if (philo->ctx->notepme != -1)
-		philo->meals_eaten++;
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	return (true);
@@ -87,6 +99,10 @@ void	*ft_routine(void *p)
 	}
 	if (philo->left_fork == philo->right_fork)
 		pthread_mutex_unlock(philo->left_fork);
-	philo->is_finished = true;
+	else
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
 	return (NULL);
 }

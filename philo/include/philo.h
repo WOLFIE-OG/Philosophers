@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:05:37 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/01 17:19:51 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/09 17:04:34 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_philo
 	struct s_ctx	*ctx;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	atomic_bool		is_finished;
+	atomic_bool		is_full;
 }	t_philo;
 
 typedef struct s_ctx
@@ -77,8 +77,7 @@ void			*ft_routine(void *p);
 
 // utils.c
 
-int				ft_get_total_eaten_meals(t_ctx *ctx);
-bool			ft_are_philos_finished(t_ctx *ctx);
+bool			ft_are_philos_full(t_ctx *ctx);
 long			ft_get_current_time(void);
 void			ft_sleep(long time);
 

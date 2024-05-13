@@ -37,6 +37,12 @@ jobs:
     
     - name: Run standard
       run: ./philo/philo 5 800 200 200 20
+    
+    - name: Run standard and check eat count of 1
+      run: ./philo/philo 5 800 200 200 7 | grep "1 is eating" | wc -l
+    
+    - name: Run standard and check eat count of all
+      run: ./philo/philo 5 800 200 200 7 | grep "is eating"| wc -l
 
     - name: Run standard with valgrind
       run: valgrind -s ./philo/philo 5 8000000 200 200 20
@@ -46,6 +52,12 @@ jobs:
     
     - name: Run bonus
       run: ./philo_bonus/philo_bonus 5 800 200 200 20
+    
+    - name: Run bonus and check eat count of 1
+      run: ./philo_bonus/philo_bonus 5 800 200 200 7 | grep "1 is eating" | wc -l
+    
+    - name: Run bonus and check eat count of all
+      run: ./philo_bonus/philo_bonus 5 800 200 200 7 | grep "is eating"| wc -l
 
     - name: Run bonus with valgrind
       run: valgrind -s ./philo_bonus/philo_bonus 5 8000000 200 200 20
