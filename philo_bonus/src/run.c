@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/01 17:25:04 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/14 14:20:56 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	*ft_monitor(void *p)
 	philo = (t_philo *)p;
 	while (true)
 	{
-		if (philo->meals_eaten >= philo->ctx->notepme
+		if (philo->meals_eaten == philo->ctx->notepme
 			&& philo->ctx->notepme > 0)
 		{
 			philo->max_ate = true;

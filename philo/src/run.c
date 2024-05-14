@@ -6,7 +6,7 @@
 /*   By: otodd <otodd@student.42london.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:13:55 by otodd             #+#    #+#             */
-/*   Updated: 2024/05/13 15:58:26 by otodd            ###   ########.fr       */
+/*   Updated: 2024/05/14 14:33:52 by otodd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ void	*ft_routine(void *p)
 	philo = (t_philo *)p;
 	if (philo->id % 2)
 		ft_sleep(100);
-	while (!philo->ctx->stop)
+	while (true)
 	{
-		if (!ft_eating(philo))
+		if (!ft_eating(philo) || philo->is_full || philo->ctx->stop)
 			break ;
 		ft_is_sleeping(philo);
 		ft_sleep(philo->ctx->tts);

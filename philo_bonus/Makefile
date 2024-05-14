@@ -6,7 +6,7 @@
 #    By: otodd <otodd@student.42london.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/08 13:30:59 by otodd             #+#    #+#              #
-#    Updated: 2024/05/08 13:37:25 by otodd            ###   ########.fr        #
+#    Updated: 2024/05/14 14:38:07 by otodd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NC			=	\033[0m
 ERASE		=	\033[2K\r
 
 CC 			= 	cc
-CFLAGS 		= 	-Wall -Wextra -Werror -g
+CFLAGS 		= 	-Wall -Wextra -Werror
 NAME		= 	philo_bonus
 COUNTER 	= 	0
 PRETTY 		= 	true
