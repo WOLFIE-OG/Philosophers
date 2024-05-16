@@ -4,7 +4,7 @@ Eat, Sleep, Spaghetti, repeat. This project is about learning how threads work b
 
 ## State
 
-[![Philosophers Build](https://img.shields.io/github/actions/workflow/status/WOLFIE-OG/Philosophers/makefile.yml?style=for-the-badge)](https://github.com/WOLFIE-OG/Philosophers/actions/workflows/makefile.yml) ![Philosophers Score](https://img.shields.io/badge/Score-Na-grey?style=for-the-badge)
+[![Philosophers Build](https://img.shields.io/github/actions/workflow/status/WOLFIE-OG/Philosophers/makefile.yml?style=for-the-badge)](https://github.com/WOLFIE-OG/Philosophers/actions/workflows/makefile.yml) ![Philosophers Score](https://img.shields.io/badge/Score-125%2F125-brightgreen?style=for-the-badge)
 
 ## Installation & Building [Standard]
 
