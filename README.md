@@ -29,3 +29,20 @@ To install and build
   cd philo_bonus
   ./philo_bonus <number_of_philosophers> <time_to_die time_to_eat> <time_to_sleep> [number_of_times_each_philosopher_must_eat]
 ```
+
+## Testing [Standard]
+
+To run the standard tests
+
+```bash
+  cd LazyPhilosophersTesterGithubActions
+  bash test.sh ../philo/philo
+```
+
+## Testing [Bonus]
+
+To run the bonus tests
+
+```bash
+  cd LazyPhilosophersTesterGithubActions
+  bash test.sh ../philo_bonus/philo_bonus

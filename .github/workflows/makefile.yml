@@ -119,9 +119,6 @@ jobs:
     - name: Run bonus with helgrind with one
       run: valgrind --tool=helgrind -s ./philo_bonus/philo_bonus 1 800 200 200 23
     
-    - name: Clone tester
-      run: git clone https://github.com/WOLFIE-OG/LazyPhilosophersTesterGithubActions
-    
     - name: Test standard
       run: cd LazyPhilosophersTesterGithubActions && ./test.sh ../philo/philo
     
