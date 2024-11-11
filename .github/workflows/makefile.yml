@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@main
 
     - name: Update
       run: sudo apt-get update --fix-missing
@@ -29,11 +29,17 @@ jobs:
     - name: Run norminette
       run: norminette philo philo_bonus
   
-    - name: Make program
+    - name: Make philosophers
       run: make PRETTY=false
 
-    - name: Re-make program
+    - name: Re-make philosophers
       run: make re PRETTY=false
+    
+    - name: View contents of philosophers
+      run: nm -C philo/philo
+    
+    - name: View contents of philosophers bonus
+      run: nm -C philo_bonus/philo_bonus
     
     - name: Run standard
       run: ./philo/philo 5 800 200 200 23
