@@ -14,6 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@main
 
+    - name: Get submodules
+      run: git pull --recurse-submodules
+
     - name: Update
       run: sudo apt-get update --fix-missing
     
