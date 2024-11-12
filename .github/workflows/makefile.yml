@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@main
 
     - name: Get submodules
-      run: git pull --recurse-submodules
+      run: git submodule update --init --recursive
 
     - name: Update
       run: sudo apt-get update --fix-missing
